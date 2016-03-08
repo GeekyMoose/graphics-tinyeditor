@@ -6,6 +6,8 @@
  */
 package main.java.com.tinyeditor;
 
+import main.java.com.tinyeditor.views.PageController;
+
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
@@ -60,6 +62,8 @@ public class MainApp extends Application{
 			loader.setLocation(MainApp.class.getResource("views/Page.fxml"));
 			AnchorPane page = (AnchorPane)loader.load();
 			this.rootLayout.setCenter(page);
+
+			PageController controller = loader.getController();
 		}
 		catch(IOException ex){
 			ex.printStackTrace();

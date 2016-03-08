@@ -3,57 +3,71 @@
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.71" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.71" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.tinyeditor.views.PageController">
    <children>
-      <Accordion layoutX="384.0" layoutY="91.0" prefHeight="296.0" prefWidth="202.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <panes>
-          <TitledPane animated="false" prefHeight="169.0" prefWidth="202.0" text="General filters">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Pane prefHeight="211.0" prefWidth="200.0">
-                           <children>
-                              <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Inversion" />
-                              <Slider layoutX="41.0" layoutY="67.0" />
-                              <CheckBox layoutX="14.0" layoutY="49.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="97.0" text="Brightness" />
-                              <CheckBox layoutX="14.0" layoutY="99.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="97.0" text="Contract" />
-                              <Slider layoutX="41.0" layoutY="117.0" />
-                              <CheckBox layoutX="14.0" layoutY="145.0" mnemonicParsing="false" text="Gamma" />
-                              <Slider layoutX="41.0" layoutY="163.0" />
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </TitledPane>
-          <TitledPane animated="false" text="Convolution filters">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Pane prefHeight="200.0" prefWidth="200.0">
-                           <children>
-                              <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="99.0" text="Blur" />
-                              <CheckBox layoutX="14.0" layoutY="42.0" mnemonicParsing="false" text="Gaussian Smoothing" />
-                              <CheckBox layoutX="14.0" layoutY="72.0" mnemonicParsing="false" text="Shapen" />
-                              <CheckBox layoutX="14.0" layoutY="100.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="135.0" text="Edge detection" />
-                              <CheckBox layoutX="14.0" layoutY="128.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="84.0" text="Emboss" />
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </TitledPane>
-          <TitledPane animated="false" text="Personal filters">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </TitledPane>
-        </panes>
-      </Accordion>
+      <SplitPane dividerPositions="0.7805611222444889" layoutX="698.0" layoutY="168.0" prefHeight="550.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <ImageView fitHeight="509.0" fitWidth="545.0" layoutX="119.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Accordion prefHeight="548.0" prefWidth="208.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <panes>
+                      <TitledPane animated="false" prefHeight="169.0" prefWidth="202.0" text="General filters">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane prefHeight="211.0" prefWidth="200.0">
+                                       <children>
+                                          <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Inversion" />
+                                          <Slider fx:id="brightnessSlider" blockIncrement="5.0" layoutX="41.0" layoutY="67.0" onKeyReleased="#handleBrightnessSlider" onMouseReleased="#handleBrightnessSlider" value="50.0" />
+                                          <CheckBox layoutX="14.0" layoutY="49.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="97.0" text="Brightness" />
+                                          <CheckBox layoutX="14.0" layoutY="99.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="97.0" text="Contract" />
+                                          <Slider layoutX="41.0" layoutY="117.0" />
+                                          <CheckBox layoutX="14.0" layoutY="145.0" mnemonicParsing="false" text="Gamma" />
+                                          <Slider layoutX="41.0" layoutY="163.0" />
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </TitledPane>
+                      <TitledPane animated="false" text="Convolution filters">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane prefHeight="200.0" prefWidth="200.0">
+                                       <children>
+                                          <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="99.0" text="Blur" />
+                                          <CheckBox layoutX="14.0" layoutY="42.0" mnemonicParsing="false" text="Gaussian Smoothing" />
+                                          <CheckBox layoutX="14.0" layoutY="72.0" mnemonicParsing="false" text="Shapen" />
+                                          <CheckBox layoutX="14.0" layoutY="100.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="135.0" text="Edge detection" />
+                                          <CheckBox layoutX="14.0" layoutY="128.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="84.0" text="Emboss" />
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </TitledPane>
+                      <TitledPane animated="false" text="Personal filters">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </TitledPane>
+                    </panes>
+                  </Accordion>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
    </children>
 </AnchorPane>
