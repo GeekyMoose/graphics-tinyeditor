@@ -141,4 +141,12 @@ public class PageController{
 		Image newImage = filter.applyFilter(currentImg);
 		this.imageEditorView.setImage(newImage);
 	}
+
+	@FXML
+	private void handlePersoFilterBox(){
+		PersonalFilter filter = new PersonalFilter();
+		Image currentImg = this.imageEditorView.getImage();
+		Image newImage = filter.applyFilter(currentImg);
+		this.imageEditorView.setImage(newImage);
+	}
 }
