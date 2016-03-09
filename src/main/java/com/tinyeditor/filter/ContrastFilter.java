@@ -17,7 +17,7 @@ public class ContrastFilter{
 	// ************************************************************************
 	// Attributes
 	// ************************************************************************
-	private int coef;
+	private double coef;
 
 
 	// ************************************************************************
@@ -47,15 +47,9 @@ public class ContrastFilter{
 				g = this.getContrastValue(color.getGreen()*255);
 				b = this.getContrastValue(color.getBlue()*255);
 
-				//Val under 0
-				r = (r<0)? 0:r;
-				g = (g<0)? 0:g;
-				b = (b<0)? 0:b;
-
-				//Val above 255
-				r = (r>255)? 255:r;
-				g = (g>255)? 255:g;
-				b = (b>255)? 255:b;
+				r = limit255Value(r);
+				g = limit255Value(g);
+				b = limit255Value(b);
 
 				color = Color.rgb(r, g, b);
 				pixelWriter.setColor(x,y,color);
@@ -68,16 +62,26 @@ public class ContrastFilter{
 	 * Return the contrast coef for current pixel position
 	 */
 	private int getContrastValue(double current){
-		double f = (259 * (this.coef + 255)) / (255 * (259 - this.coef));
-		return (int)((f*(current - 128)) + 128);
+		return (int) ((current - (255 / 2)) * (this.coef) + (255/ 2));
 	}
 
+	/**
+	 * Return a value limited to 0-255. 
+	 *
+	 * @param value		Value to process
+	 * @return			Value between 0 and 255
+	 */
+	private int limit255Value(int value){
+		if(value > 255)	{ return 255; }
+		if(value < 0)	{ return 0; }
+		return value;
+	}
 
 
 	// ************************************************************************
 	// Getters - Setters
 	// ************************************************************************
-	public void setCoef(int value){
+	public void setCoef(double value){
 		this.coef = value;
 	}
 }

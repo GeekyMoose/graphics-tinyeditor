@@ -32,7 +32,7 @@
                                           <Slider fx:id="brightnessSlider" blockIncrement="5.0" layoutX="41.0" layoutY="67.0" min="-100.0" onKeyReleased="#handleBrightnessSlider" onMouseReleased="#handleBrightnessSlider" />
                                           <CheckBox layoutX="14.0" layoutY="49.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="97.0" text="Brightness" />
                                           <CheckBox layoutX="14.0" layoutY="99.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="97.0" text="Contract" />
-                                          <Slider fx:id="contrastFilterSlider" layoutX="41.0" layoutY="117.0" min="-100.0" onKeyReleased="#handleContrastSlider" onMouseReleased="#handleContrastSlider" />
+                                          <Slider fx:id="contrastFilterSlider" layoutX="41.0" layoutY="117.0" max="2.0" onKeyReleased="#handleContrastSlider" onMouseReleased="#handleContrastSlider" value="1.0" />
                                           <CheckBox layoutX="14.0" layoutY="145.0" mnemonicParsing="false" text="Gamma" />
                                           <Slider fx:id="gammaCorrectionFilterSlider" layoutX="41.0" layoutY="163.0" max="8.0" onKeyReleased="#handelGammaCorrectionFilterSlider" onMouseReleased="#handelGammaCorrectionFilterSlider" value="4.0" />
                                        </children>

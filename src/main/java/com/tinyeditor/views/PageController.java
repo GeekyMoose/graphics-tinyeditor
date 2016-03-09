@@ -82,7 +82,7 @@ public class PageController{
 
 	@FXML
 	private void handleContrastSlider(){
-		int value = (int)this.contrastFilterSlider.getValue();
+		double value = this.contrastFilterSlider.getValue();
 		this.contrastFilter.setCoef(value);
 		Image currentImg = this.imageEditorView.getImage();
 		Image newImg = this.contrastFilter.applyFilter(currentImg);
