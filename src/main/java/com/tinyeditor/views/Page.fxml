@@ -47,11 +47,11 @@
                                  <children>
                                     <Pane prefHeight="200.0" prefWidth="200.0">
                                        <children>
-                                          <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="99.0" text="Blur" />
-                                          <CheckBox layoutX="14.0" layoutY="42.0" mnemonicParsing="false" text="Gaussian Smoothing" />
-                                          <CheckBox layoutX="14.0" layoutY="72.0" mnemonicParsing="false" text="Shapen" />
-                                          <CheckBox layoutX="14.0" layoutY="100.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="135.0" text="Edge detection" />
-                                          <CheckBox layoutX="14.0" layoutY="128.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="84.0" text="Emboss" />
+                                          <CheckBox fx:id="blurFilterBox" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseReleased="#handleBlurFilterBox" prefHeight="18.0" prefWidth="99.0" text="Blur" />
+                                          <CheckBox layoutX="14.0" layoutY="42.0" mnemonicParsing="false" onMouseReleased="#handleGaussianSmoothingFilterBox" text="Gaussian Smoothing" />
+                                          <CheckBox fx:id="sharpenFilterBox" layoutX="14.0" layoutY="72.0" mnemonicParsing="false" onMouseReleased="#handleSharpenFilterBox" text="Sharpen" />
+                                          <CheckBox fx:id="EdgeDectectionFilterBox" layoutX="14.0" layoutY="100.0" mnemonicParsing="false" onMouseReleased="#handleEdgeDetectionFilterBox" prefHeight="18.0" prefWidth="135.0" text="Edge detection" />
+                                          <CheckBox layoutX="14.0" layoutY="128.0" mnemonicParsing="false" onMouseReleased="#handleEmbossFilterBox" prefHeight="18.0" prefWidth="84.0" text="Emboss" />
                                        </children>
                                     </Pane>
                                  </children>

@@ -22,19 +22,24 @@ public class PageController{
 	// ************************************************************************
 	@FXML
 	private Slider		brightnessSlider;
-
 	@FXML
 	private ImageView	imageEditorView;
-
 	@FXML
 	private CheckBox	inversionBox;
+	@FXML
+	private CheckBox	blurFilterBox;
+	@FXML
+	private CheckBox	sharpenFilterBox;
+	@FXML
+	private CheckBox	edgeDectectionFilterBox;
+
+
 
 	// ************************************************************************
 	// Attributes Model
 	// ************************************************************************
-	private BrightnessFilter brightnessFilter = new BrightnessFilter();
-
-	private ImageEditor imageEditor = new ImageEditor();
+	private BrightnessFilter	brightnessFilter	= new BrightnessFilter();
+	private ImageEditor 		imageEditor			= new ImageEditor();
 
 
 	// ************************************************************************
@@ -59,7 +64,6 @@ public class PageController{
 		this.imageEditorView.setImage(newImg);
 	}
 
-
 	@FXML
 	private void handleBrightnessSlider(){
 		int value = (int)this.brightnessSlider.getValue();
@@ -68,5 +72,49 @@ public class PageController{
 		Image currentImg = this.imageEditorView.getImage();
 		Image newImg = filter.applyFilter(currentImg);
 		this.imageEditorView.setImage(newImg);
+	}
+
+
+	// ************************************************************************
+	// Handler Convolution filters
+	// ************************************************************************
+	@FXML
+	private void handleBlurFilterBox(){
+		BlurFilter filter = new BlurFilter();
+		Image currentImg = this.imageEditorView.getImage();
+		Image newImage = filter.applyFilter(currentImg);
+		this.imageEditorView.setImage(newImage);
+	}
+	
+	@FXML
+	private void handleSharpenFilterBox(){
+		SharpenFilter filter = new SharpenFilter();
+		Image currentImg = this.imageEditorView.getImage();
+		Image newImage = filter.applyFilter(currentImg);
+		this.imageEditorView.setImage(newImage);
+	}
+
+	@FXML
+	private void handleEdgeDetectionFilterBox(){
+		EdgeDetectionFilter filter = new EdgeDetectionFilter();
+		Image currentImg = this.imageEditorView.getImage();
+		Image newImage = filter.applyFilter(currentImg);
+		this.imageEditorView.setImage(newImage);
+	}
+
+	@FXML
+	private void handleEmbossFilterBox(){
+		EmbossFilter filter = new EmbossFilter();
+		Image currentImg = this.imageEditorView.getImage();
+		Image newImage = filter.applyFilter(currentImg);
+		this.imageEditorView.setImage(newImage);
+	}
+
+	@FXML
+	private void handleGaussianSmoothingFilterBox(){
+		GaussianSmoothingFilter filter = new GaussianSmoothingFilter();
+		Image currentImg = this.imageEditorView.getImage();
+		Image newImage = filter.applyFilter(currentImg);
+		this.imageEditorView.setImage(newImage);
 	}
 }
