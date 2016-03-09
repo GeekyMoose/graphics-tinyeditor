@@ -35,4 +35,5 @@ growthTree:
 .PHONY: cpResources
 cpResources:
 	@mkdir -p $(BUILD)/main/java/com/tinyeditor/views
-	cp -r src/main/java/com/tinyeditor/views/* $(BUILD)/main/java/com/tinyeditor/views/.
+	cp -r src/main/java/com/tinyeditor/views/*.fxml $(BUILD)/main/java/com/tinyeditor/views/.
+	cp -r tmp $(BUILD)/.

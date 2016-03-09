@@ -15,7 +15,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <ImageView fitHeight="509.0" fitWidth="545.0" layoutX="119.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageEditorView" fitHeight="509.0" fitWidth="545.0" layoutX="119.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -28,8 +28,8 @@
                                  <children>
                                     <Pane prefHeight="211.0" prefWidth="200.0">
                                        <children>
-                                          <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Inversion" />
-                                          <Slider fx:id="brightnessSlider" blockIncrement="5.0" layoutX="41.0" layoutY="67.0" onKeyReleased="#handleBrightnessSlider" onMouseReleased="#handleBrightnessSlider" value="50.0" />
+                                          <CheckBox fx:id="inversionBox" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#handleInversionBox" text="Inversion" />
+                                          <Slider fx:id="brightnessSlider" blockIncrement="5.0" layoutX="41.0" layoutY="67.0" min="-100.0" onKeyReleased="#handleBrightnessSlider" onMouseReleased="#handleBrightnessSlider" />
                                           <CheckBox layoutX="14.0" layoutY="49.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="97.0" text="Brightness" />
                                           <CheckBox layoutX="14.0" layoutY="99.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="97.0" text="Contract" />
                                           <Slider layoutX="41.0" layoutY="117.0" />
