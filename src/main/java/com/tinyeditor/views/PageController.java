@@ -1,7 +1,9 @@
 package main.java.com.tinyeditor.views;
 
-import  main.java.com.tinyeditor.image.*;
-import  main.java.com.tinyeditor.filter.*;
+import main.java.com.tinyeditor.image.*;
+import main.java.com.tinyeditor.filter.asset.*;
+import main.java.com.tinyeditor.filter.convolution.*;
+import main.java.com.tinyeditor.filter.functional.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
@@ -25,14 +27,6 @@ public class PageController{
 	@FXML
 	private ImageView	imageEditorView;
 	@FXML
-	private CheckBox	inversionBox;
-	@FXML
-	private CheckBox	blurFilterBox;
-	@FXML
-	private CheckBox	sharpenFilterBox;
-	@FXML
-	private CheckBox	edgeDectectionFilterBox;
-	@FXML
 	private Slider		contrastFilterSlider;
 	@FXML
 	private Slider		gammaCorrectionFilterSlider;
@@ -42,10 +36,21 @@ public class PageController{
 	// ************************************************************************
 	// Attributes Model
 	// ************************************************************************
-	private BrightnessFilter	brightnessFilter	= new BrightnessFilter();
-	private ContrastFilter		contrastFilter		= new ContrastFilter();
-	private ImageEditor 		imageEditor			= new ImageEditor();
-	private GammaCorrectionFilter	gammaCorrectionFilter = new GammaCorrectionFilter();
+	private ImageEditor imageEditor				= new ImageEditor(); //Main img
+
+	// Functional Filters
+	private BrightnessFilter		brightnessFilter		= new BrightnessFilter();
+	private ContrastFilter			contrastFilter			= new ContrastFilter();
+	private GammaCorrectionFilter	gammaCorrectionFilter	= new GammaCorrectionFilter();
+	private ImageFilter				inversionFilter			= new InversionFilter();
+
+	// Convolution Filters
+	private ImageFilter blurFilter				= new BlurFilter();
+	private ImageFilter sharpenFilter			= new SharpenFilter();
+	private ImageFilter edgeDetectionFilter		= new EdgeDetectionFilter();
+	private ImageFilter gaussianSmoothingFilter	= new GaussianSmoothingFilter();
+	private ImageFilter personalFilter			= new PersonalFilter();
+	private ImageFilter embossFilter			= new EmbossFilter();
 
 
 	// ************************************************************************
@@ -60,42 +65,27 @@ public class PageController{
 
 
 	// ************************************************************************
-	// Handler General filters
+	// Handler Functional  filters
 	// ************************************************************************
 	@FXML
 	private void handleInversionBox(){
-		InversionFilter filter = new InversionFilter();
-		Image currentImg = this.imageEditorView.getImage();
-		Image newImg = filter.applyFilter(currentImg);
-		this.imageEditorView.setImage(newImg);
+		this.startApplyFilter(this.inversionFilter);
 	}
-
 	@FXML
 	private void handleBrightnessSlider(){
 		int value = (int)this.brightnessSlider.getValue();
-		BrightnessFilter filter = this.brightnessFilter;
-		filter.setCoef(value);
-		Image currentImg = this.imageEditorView.getImage();
-		Image newImg = filter.applyFilter(currentImg);
-		this.imageEditorView.setImage(newImg);
+		this.brightnessFilter.setCoef(value);
+		this.startApplyFilter(this.brightnessFilter);
 	}
-
 	@FXML
 	private void handleContrastSlider(){
-		double value = this.contrastFilterSlider.getValue();
-		this.contrastFilter.setCoef(value);
-		Image currentImg = this.imageEditorView.getImage();
-		Image newImg = this.contrastFilter.applyFilter(currentImg);
-		this.imageEditorView.setImage(newImg);
+		this.contrastFilter.setCoef(this.contrastFilterSlider.getValue());
+		this.startApplyFilter(this.contrastFilter);
 	}
-
 	@FXML
 	private void handelGammaCorrectionFilterSlider(){
-		double value = this.gammaCorrectionFilterSlider.getValue();
-		this.gammaCorrectionFilter.setCoef(value);
-		Image currentImg = this.imageEditorView.getImage();
-		Image newImg = this.gammaCorrectionFilter.applyFilter(currentImg);
-		this.imageEditorView.setImage(newImg);
+		this.gammaCorrectionFilter.setCoef(this.gammaCorrectionFilterSlider.getValue());
+		this.startApplyFilter(this.gammaCorrectionFilter);
 	}
 
 
@@ -104,49 +94,37 @@ public class PageController{
 	// ************************************************************************
 	@FXML
 	private void handleBlurFilterBox(){
-		BlurFilter filter = new BlurFilter();
-		Image currentImg = this.imageEditorView.getImage();
-		Image newImage = filter.applyFilter(currentImg);
-		this.imageEditorView.setImage(newImage);
+		this.startApplyFilter(this.blurFilter);
 	}
-	
 	@FXML
 	private void handleSharpenFilterBox(){
-		SharpenFilter filter = new SharpenFilter();
-		Image currentImg = this.imageEditorView.getImage();
-		Image newImage = filter.applyFilter(currentImg);
-		this.imageEditorView.setImage(newImage);
+		this.startApplyFilter(this.sharpenFilter);
 	}
-
 	@FXML
 	private void handleEdgeDetectionFilterBox(){
-		EdgeDetectionFilter filter = new EdgeDetectionFilter();
-		Image currentImg = this.imageEditorView.getImage();
-		Image newImage = filter.applyFilter(currentImg);
-		this.imageEditorView.setImage(newImage);
+		this.startApplyFilter(this.edgeDetectionFilter);
 	}
-
 	@FXML
 	private void handleEmbossFilterBox(){
-		EmbossFilter filter = new EmbossFilter();
-		Image currentImg = this.imageEditorView.getImage();
-		Image newImage = filter.applyFilter(currentImg);
-		this.imageEditorView.setImage(newImage);
+		this.startApplyFilter(this.embossFilter);
 	}
-
 	@FXML
 	private void handleGaussianSmoothingFilterBox(){
-		GaussianSmoothingFilter filter = new GaussianSmoothingFilter();
-		Image currentImg = this.imageEditorView.getImage();
-		Image newImage = filter.applyFilter(currentImg);
-		this.imageEditorView.setImage(newImage);
+		this.startApplyFilter(this.gaussianSmoothingFilter);
 	}
-
 	@FXML
 	private void handlePersoFilterBox(){
-		PersonalFilter filter = new PersonalFilter();
-		Image currentImg = this.imageEditorView.getImage();
-		Image newImage = filter.applyFilter(currentImg);
+		this.startApplyFilter(this.personalFilter);
+	}
+
+
+	// ************************************************************************
+	// Controller Inner Functions
+	// ************************************************************************
+	/* Apply a given filter to current image and update */
+	private void startApplyFilter(ImageFilter filter){
+		Image currentImg	= this.imageEditorView.getImage();
+		Image newImage		= filter.applyFilter(currentImg);
 		this.imageEditorView.setImage(newImage);
 	}
 }

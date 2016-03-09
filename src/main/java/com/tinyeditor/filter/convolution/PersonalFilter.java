@@ -1,11 +1,4 @@
-package main.java.com.tinyeditor.filter;
-
-import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
-
+package main.java.com.tinyeditor.filter.convolution;
 
 /**
  *

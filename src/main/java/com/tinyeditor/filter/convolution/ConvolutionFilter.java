@@ -1,4 +1,7 @@
-package main.java.com.tinyeditor.filter;
+package main.java.com.tinyeditor.filter.convolution;
+
+import main.java.com.tinyeditor.filter.asset.FilterHelper;
+import main.java.com.tinyeditor.filter.asset.ImageFilter;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
@@ -7,54 +10,38 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 /**
- * Define a Convolution Filter
+ * Define a Convolution Filter.
+ * All convolution filters extends this filter.
  *
  * @since	Mar 9, 2016
  * @author	Constantin MASSON
  */
-public abstract class ConvolutionFilter{
-	protected int matrix[][];
+public abstract class ConvolutionFilter implements ImageFilter{
+	protected int matrix[][]; //Generaly matrix size 3,5,7,9 (Can be not square)
 	protected int offset; //Filter offset, usually 0
 	protected int divisor; //Divisor, usually 1
 
 
 	// ************************************************************************
-	// General functions
+	// Override functions from Image Filter
 	// ************************************************************************
-	/**
-	 * Apply convolution filter on an image given in parameter
-	 *
-	 * @param img	Image to process (Wont be modified)
-	 * @return		Return a PixelWriter of the image with filter applied
-	 */
-	public WritableImage applyFilter(Image img){
-		int height	= (int)img.getHeight();
-		int width	= (int)img.getWidth();
+	@Override
+	public WritableImage applyFilter(Image image){
+		int height	= (int)image.getHeight();
+		int width	= (int)image.getWidth();
 		//Set the pixel reader and writer
-		PixelReader		pixelReader	= img.getPixelReader();
-		WritableImage	wImg		= new WritableImage(height, width);
-		PixelWriter		pixelWriter = wImg.getPixelWriter();
+		PixelReader		pixelReader	= image.getPixelReader();
+		WritableImage	wimage		= new WritableImage(width, height);
+		PixelWriter		pixelWriter = wimage.getPixelWriter();
 
 		//Process each pixel
 		for(int y=0; y<height; y++){
 			for(int x=0; x<width; x++){
-				Color color = this.getColorFromMatrix(pixelReader, x, y, height, width);
+				Color color = this.getColorFromMatrix(pixelReader, x, y, width, height);
 				pixelWriter.setColor(x,y,color);
 			}
 		}
-		return wImg;
-	}
-
-	/**
-	 * Return a value limited to 0-255. 
-	 *
-	 * @param value		Value to process
-	 * @return			Value between 0 and 255
-	 */
-	private int limit255Value(int value){
-		if(value > 255)	{ return 255; }
-		if(value < 0)	{ return 0; }
-		return value;
+		return wimage;
 	}
 
 
@@ -68,12 +55,12 @@ public abstract class ConvolutionFilter{
 	 * @param pixelReader	PixelReader to process
 	 * @param posX			Current X coordinate in pixelReader
 	 * @param posY			Current Y coordinate in pixelReader
-	 * @param h				Image height
 	 * @param w				Image width
+	 * @param h				Image height
 	 * @return				New Color calculated from matrix filter
 	 */
-	private Color getColorFromMatrix(PixelReader pixelReader, int posX, int posY, int h, int w){
-		int posMx, posMy; //Position of current matrix element in img
+	private Color getColorFromMatrix(PixelReader pixelReader, int posX, int posY, int w, int h){
+		int posMx, posMy; //Position of current matrix element in image
 		int sumR = 0, sumG = 0, sumB = 0;
 
 		//Process each element of matrix
@@ -92,9 +79,9 @@ public abstract class ConvolutionFilter{
 			}
 		}
 		//Apply calculation + Limit extreme values (x<0, x>255)
-		sumR = limit255Value(this.offset + (sumR/this.divisor));
-		sumG = limit255Value(this.offset + (sumG/this.divisor));
-		sumB = limit255Value(this.offset + (sumB/this.divisor));
+		sumR = FilterHelper.limit255Value(this.offset + (sumR/this.divisor));
+		sumG = FilterHelper.limit255Value(this.offset + (sumG/this.divisor));
+		sumB = FilterHelper.limit255Value(this.offset + (sumB/this.divisor));
 		return Color.rgb(sumR, sumG, sumB);
 	}
 

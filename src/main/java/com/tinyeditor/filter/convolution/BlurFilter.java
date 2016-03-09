@@ -1,11 +1,4 @@
-package main.java.com.tinyeditor.filter;
-
-import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
-import javafx.scene.paint.Color;
-
+package main.java.com.tinyeditor.filter.convolution;
 
 /**
  * Blur filter
@@ -19,7 +12,6 @@ public class BlurFilter extends ConvolutionFilter{
 	 */
 	public BlurFilter(){
 		int[][] m = {{1,1,1},{1,1,1},{1,1,1}}; //@TODO Allow general rule
-		//int[][] m = {{0,0,0},{0,1,0},{0,0,0}}; //@TODO Allow general rule
 		this.matrix		= m;
 		this.offset		= 0;
 		this.divisor	= 9;
