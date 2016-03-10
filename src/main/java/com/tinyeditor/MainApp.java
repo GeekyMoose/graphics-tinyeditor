@@ -8,6 +8,7 @@ package main.java.com.tinyeditor;
 
 import main.java.com.tinyeditor.views.PageController;
 import main.java.com.tinyeditor.views.PersonalFilterDialogController;
+import main.java.com.tinyeditor.filter.convolution.PersonalFilter;
 
 import java.io.IOException;
 
@@ -100,10 +101,24 @@ public class MainApp extends Application{
 
 			PersonalFilterDialogController c = loader.getController();
 			c.setDialogStage(dialogStage);
+			c.setMainApp(this);
 			dialogStage.showAndWait();
 		}
 		catch(IOException ex){
 			ex.printStackTrace();
 		}
 	}
+
+
+	// ************************************************************************
+	// TEMPORARY - Play the role of a model to keep current Personal Filter
+	// ************************************************************************
+	private PersonalFilter f = new PersonalFilter(); //Default one
+	public void setPersonalFilter(PersonalFilter f){
+		this.f = f;
+	}
+	public PersonalFilter getPersonalFilter(){
+		return this.f;
+	}
+
 }

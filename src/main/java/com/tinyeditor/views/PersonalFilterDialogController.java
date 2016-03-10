@@ -1,5 +1,8 @@
 package main.java.com.tinyeditor.views;
 
+import main.java.com.tinyeditor.filter.convolution.PersonalFilter;
+import main.java.com.tinyeditor.MainApp;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -37,6 +40,7 @@ public class PersonalFilterDialogController{
 	// ************************************************************************
 	// Inner Attributes
 	// ************************************************************************
+	private MainApp mainApp;
 	private Stage dialogStage;
 	private int matrixNbRow;
 	private int matrixNbColumn;
@@ -72,7 +76,8 @@ public class PersonalFilterDialogController{
 			alert.showAndWait();
 			return false;
 		}
-		this.createPersoFilterFromInput(); //@TODO
+		PersonalFilter filter = this.createPersoFilterFromInput();
+		this.mainApp.setPersonalFilter(filter);
 		this.dialogStage.close();
 		return true;
 	}
@@ -118,10 +123,12 @@ public class PersonalFilterDialogController{
 	// Other / Filter crea functions
 	// ************************************************************************
 	/* Data must be valid before */
-	public void createPersoFilterFromInput(){
+	public PersonalFilter createPersoFilterFromInput(){
 		int div		= Integer.parseInt(this.divisorTextField.getText());
 		int offset	= Integer.parseInt(this.offsetTextField.getText());
 		int[][]matrix = getMatrixFromGridPane();
+		PersonalFilter f = new PersonalFilter(matrix, offset, div);
+		return f;
 	}
 
 
@@ -162,6 +169,9 @@ public class PersonalFilterDialogController{
 
 	public void setDialogStage(Stage dialogStage){
 		this.dialogStage = dialogStage;
+	}
+	public void setMainApp(MainApp mainApp){
+		this.mainApp = mainApp;
 	}
 
 

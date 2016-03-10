@@ -51,7 +51,6 @@ public class PageController{
 	private ImageFilter sharpenFilter			= new SharpenFilter();
 	private ImageFilter edgeDetectionFilter		= new EdgeDetectionFilter();
 	private ImageFilter gaussianSmoothingFilter	= new GaussianSmoothingFilter();
-	private ImageFilter personalFilter			= new PersonalFilter();
 	private ImageFilter embossFilter			= new EmbossFilter();
 
 
@@ -116,7 +115,7 @@ public class PageController{
 	}
 	@FXML
 	private void handlePersoFilterBox(){
-		this.startApplyFilter(this.personalFilter);
+		this.startApplyFilter(this.mainApp.getPersonalFilter());
 	}
 
 
