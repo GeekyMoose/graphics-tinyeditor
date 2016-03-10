@@ -65,12 +65,12 @@ public class PersonalFilterDialogController{
 	// ************************************************************************
 	@FXML
 	private boolean handleValidButton(){
-		if(!this.isValid()){
+		if(!this.isValid() || !this.isValidMatrixContent()){
 			Alert alert = new Alert(AlertType.WARNING);
 			alert.initOwner(this.dialogStage);
 			alert.setTitle("Invalid input");
 			alert.setHeaderText("Invalid input");
-			alert.setContentText("Please check if all data are writen and valid");
+			alert.setContentText("Please check if all data are written and valid");
 			alert.showAndWait();
 			return false;
 		}
@@ -134,6 +134,7 @@ public class PersonalFilterDialogController{
 		PersonalFilter f = new PersonalFilter(matrix, offset, div);
 		return f;
 	}
+
 	public void resetValues(){
 		int[][]m	= this.mainApp.getPersonalFilter().getMatrix();
 		int divisor	= this.mainApp.getPersonalFilter().getDivisor();
@@ -172,6 +173,25 @@ public class PersonalFilterDialogController{
 		return true;
 	}
 
+	/* Check whether each element in matrix are a number */
+	public boolean isValidMatrixContent(){
+		int current;
+		try{
+			for(Node node : this.matrixGridPane.getChildren()){
+				TextField tf = (TextField)node;
+				current = Integer.parseInt(tf.getText());
+			}
+		}
+		catch(NumberFormatException e){
+			return false;
+		}
+		return true;
+	}
+
+
+	// ************************************************************************
+	// Setters
+	// ************************************************************************
 	/**
 	 * Set data for displayed dialog.
 	 */
@@ -239,8 +259,13 @@ public class PersonalFilterDialogController{
 		int[][]m = new int[this.matrixNbRow][this.matrixNbColumn];
 		int y = 0, x = 0, pos = 0;
 		for(Node node : this.matrixGridPane.getChildren()) {
-			TextField tf = (TextField)node;
-			m[y][x] = Integer.parseInt(tf.getText());
+			try{
+				TextField tf = (TextField)node;
+				m[y][x] = Integer.parseInt(tf.getText());
+			}
+			catch(NumberFormatException e){
+				m[y][x] = 0;
+			}
 			x++;
 			if(x >= this.matrixNbColumn){
 				x = 0;
