@@ -152,7 +152,7 @@ public class PersonalFilterDialogController{
 		int mNbR	= Integer.parseInt(this.matrixNbRowTextField.getText());
 		int mNbC	= Integer.parseInt(this.matrixNbColumnTextField.getText());
 		if(mNbR != 3 && mNbR != 5 && mNbR != 7 && mNbR != 9){ return false; }
-		if(mNbC != 3 && mNbR != 5 && mNbR != 7 && mNbR != 9){ return false; }
+		if(mNbC != 3 && mNbC != 5 && mNbC != 7 && mNbC != 9){ return false; }
 		return true;
 	}
 
@@ -180,7 +180,7 @@ public class PersonalFilterDialogController{
 	// ************************************************************************
 	private void setMatrixSize(){
 		this.matrixNbRow	= Integer.parseInt(this.matrixNbRowTextField.getText());
-		int matrixNbColumn	= Integer.parseInt(this.matrixNbColumnTextField.getText());
+		this.matrixNbColumn	= Integer.parseInt(this.matrixNbColumnTextField.getText());
 	}
 
 	/* Set value of each matrix element in GridPane */
