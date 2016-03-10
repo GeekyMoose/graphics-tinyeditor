@@ -234,7 +234,7 @@ public class PersonalFilterDialogController{
 		for(int x=0; x<this.matrixNbColumn; x++){
 			for(int y=0; y<this.matrixNbRow; y++){
 				TextField tf = new TextField();
-				tf.setPrefWidth(25);
+				tf.setPrefWidth(100);
 				tf.setText("0");
 				this.matrixGridPane.add(tf, x, y);
 			}
