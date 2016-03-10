@@ -94,6 +94,7 @@ public class PersonalFilterDialogController{
 		int nbRow = Integer.parseInt(this.matrixNbRowTextField.getText());
 		int nbCol = Integer.parseInt(this.matrixNbColumnTextField.getText());
 		this.setMatrixSize(nbRow, nbCol);
+		this.reloadGridPane();
 		return true;
 	}
 
