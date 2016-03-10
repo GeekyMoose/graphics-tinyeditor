@@ -1,5 +1,6 @@
 package main.java.com.tinyeditor.views;
 
+import main.java.com.tinyeditor.MainApp;
 import main.java.com.tinyeditor.image.*;
 import main.java.com.tinyeditor.filter.asset.*;
 import main.java.com.tinyeditor.filter.convolution.*;
@@ -36,6 +37,7 @@ public class PageController{
 	// ************************************************************************
 	// Attributes Model
 	// ************************************************************************
+	private MainApp		mainApp;
 	private ImageEditor imageEditor				= new ImageEditor(); //Main img
 
 	// Functional Filters
@@ -119,6 +121,14 @@ public class PageController{
 
 
 	// ************************************************************************
+	// Handler For dialog and other
+	// ************************************************************************
+	@FXML
+	private void handlePersoFilterEdit(){
+		this.mainApp.showPersonalFilterDialog();
+	}
+
+	// ************************************************************************
 	// Controller Inner Functions
 	// ************************************************************************
 	/* Apply a given filter to current image and update */
@@ -126,5 +136,10 @@ public class PageController{
 		Image currentImg	= this.imageEditorView.getImage();
 		Image newImage		= filter.applyFilter(currentImg);
 		this.imageEditorView.setImage(newImage);
+	}
+
+	/* Set the linked mainApp */
+	public void setMainApp(MainApp mainApp){
+		this.mainApp = mainApp;
 	}
 }

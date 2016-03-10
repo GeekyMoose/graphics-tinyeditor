@@ -7,7 +7,6 @@
 package main.java.com.tinyeditor;
 
 import main.java.com.tinyeditor.views.PageController;
-import main.java.com.tinyeditor.views.PersonalFilterDialogController;
 
 import java.io.IOException;
 
@@ -84,10 +83,10 @@ public class MainApp extends Application{
 	// ************************************************************************
 	// Dialog - Extra functions
 	// ************************************************************************
-	public void showPersonalFilterDialog(){
+	private void showPersonalFilterDialog(){
 		try{
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("views/PersonalFilterDialog.fxml"));
+			loader.setLocation(MainApp.class.getResource("views/PersonalFilterDialgo.fxml"));
 			AnchorPane pageDialog = (AnchorPane)loader.load();
 
 			//Create and set the dialog page

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
@@ -63,6 +64,7 @@
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
                                     <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseReleased="#handlePersoFilterBox" text="Perso" />
+                                    <Button layoutX="13.0" layoutY="45.0" mnemonicParsing="false" onMouseReleased="#handlePersoFilterEdit" text="Edit" />
                                  </children></AnchorPane>
                         </content>
                       </TitledPane>
