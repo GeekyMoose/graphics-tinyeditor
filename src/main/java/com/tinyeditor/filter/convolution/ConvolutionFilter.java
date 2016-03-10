@@ -95,4 +95,13 @@ public abstract class ConvolutionFilter implements ImageFilter{
 	public int getMatrixNbColumn(){
 		return this.matrix[0].length;
 	}
+	public int[][] getMatrix(){
+		return this.matrix;
+	}
+	public int getOffset(){
+		return this.offset;
+	}
+	public int getDivisor(){
+		return this.divisor;
+	}
 }

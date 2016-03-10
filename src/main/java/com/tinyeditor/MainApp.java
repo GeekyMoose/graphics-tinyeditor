@@ -102,6 +102,7 @@ public class MainApp extends Application{
 			PersonalFilterDialogController c = loader.getController();
 			c.setDialogStage(dialogStage);
 			c.setMainApp(this);
+			c.resetValues();
 			dialogStage.showAndWait();
 		}
 		catch(IOException ex){

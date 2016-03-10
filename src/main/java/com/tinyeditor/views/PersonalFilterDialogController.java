@@ -3,6 +3,8 @@ package main.java.com.tinyeditor.views;
 import main.java.com.tinyeditor.filter.convolution.PersonalFilter;
 import main.java.com.tinyeditor.MainApp;
 
+import java.lang.NumberFormatException;
+
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -53,12 +55,8 @@ public class PersonalFilterDialogController{
 	// ************************************************************************
 	@FXML
 	private void initialize(){
-		this.matrixNbRow	= 3;
-		this.matrixNbColumn	= 3;
-		this.matrixNbRowTextField.setText("3");
-		this.matrixNbColumnTextField.setText("3");
 		int[][]m = {{0,0,0},{0,0,0},{0,0,0}};
-		setMatrixGridPane(m);
+		this.setData(1, 0, m);
 	}
 
 
@@ -93,7 +91,9 @@ public class PersonalFilterDialogController{
 			alert.showAndWait();
 			return false;
 		}
-		this.setMatrixSize();
+		int nbRow = Integer.parseInt(this.matrixNbRowTextField.getText());
+		int nbCol = Integer.parseInt(this.matrixNbColumnTextField.getText());
+		this.setMatrixSize(nbRow, nbCol);
 		return true;
 	}
 
@@ -105,17 +105,21 @@ public class PersonalFilterDialogController{
 	@FXML
 	private void handleSetBlurPreset(){
 		int[][]m = {{1,1,1},{1,1,1},{1,1,1}};
-		this.setData(9, 0, 3, 3, m);
+		this.setData(9, 0, m);
 	}
 	@FXML
 	private void handleSetEdgePreset(){
 		int[][]m = {{0,-1,0},{0,1,0},{0,0,0}};
-		this.setData(1, 0, 3, 3, m);
+		this.setData(1, 0, m);
 	}
 	@FXML
 	private void handleSetEmbossPreset(){
 		int[][]m = {{-1,0,1},{-1,1,1},{-1,0,1}};
-		this.setData(1, 0, 3, 3, m);
+		this.setData(1, 0, m);
+	}
+	@FXML
+	public void handleResetValues(){
+		this.resetValues();
 	}
 
 
@@ -130,6 +134,12 @@ public class PersonalFilterDialogController{
 		PersonalFilter f = new PersonalFilter(matrix, offset, div);
 		return f;
 	}
+	public void resetValues(){
+		int[][]m	= this.mainApp.getPersonalFilter().getMatrix();
+		int divisor	= this.mainApp.getPersonalFilter().getDivisor();
+		int offset	= this.mainApp.getPersonalFilter().getOffset();
+		this.setData(divisor, offset,m);
+	}
 
 
 	// ************************************************************************
@@ -137,39 +147,49 @@ public class PersonalFilterDialogController{
 	// ************************************************************************
 	/* Check whether values are valid */
 	public boolean isValid(){
-		if(this.divisorTextField.getText().equals("")){return false;}
-		if(this.offsetTextField.getText().equals("")){return false;}
-		int div		= Integer.parseInt(this.divisorTextField.getText());
-		int offset	= Integer.parseInt(this.offsetTextField.getText());
-		if(div < 1){return false; }
+		try{
+			int div		= Integer.parseInt(this.divisorTextField.getText());
+			int offset	= Integer.parseInt(this.offsetTextField.getText());
+			if(div < 1){return false; }
+		}
+		catch(NumberFormatException e){
+			return false;
+		}
 		return true;
 	}
 
 	/* Check whether matrix size is valid */
 	public boolean isValidMatrixSize(){
-		if(this.matrixNbRowTextField.getText().equals("")){return false;}
-		if(this.matrixNbColumnTextField.getText().equals("")){return false;}
-		int mNbR	= Integer.parseInt(this.matrixNbRowTextField.getText());
-		int mNbC	= Integer.parseInt(this.matrixNbColumnTextField.getText());
-		if(mNbR != 3 && mNbR != 5 && mNbR != 7 && mNbR != 9){ return false; }
-		if(mNbC != 3 && mNbC != 5 && mNbC != 7 && mNbC != 9){ return false; }
+		try{
+			int mNbR	= Integer.parseInt(this.matrixNbRowTextField.getText());
+			int mNbC	= Integer.parseInt(this.matrixNbColumnTextField.getText());
+			if(mNbR != 3 && mNbR != 5 && mNbR != 7 && mNbR != 9){ return false; }
+			if(mNbC != 3 && mNbC != 5 && mNbC != 7 && mNbC != 9){ return false; }
+		}
+		catch(NumberFormatException e){
+			return false;
+		}
 		return true;
 	}
 
 	/**
 	 * Set data for displayed dialog.
 	 */
-	private void setData(int divisor, int offset, int mNbR, int mNbC, int[][]m){
+	private void setData(int divisor, int offset, int[][]m){
 		this.divisorTextField.setText(Integer.toString(divisor));
 		this.offsetTextField.setText(Integer.toString(offset));
-		this.matrixNbRowTextField.setText(Integer.toString(mNbR));
-		this.matrixNbColumnTextField.setText(Integer.toString(mNbC));
-		this.setMatrixGridPane(m);
+		int nbRow = m.length;
+		int nbCol = m[0].length;
+		this.setMatrixSize(nbRow, nbCol);
+		this.reloadGridPane();
+		this.setValuesMatrixGridPane(m);
 	}
+
 
 	public void setDialogStage(Stage dialogStage){
 		this.dialogStage = dialogStage;
 	}
+
 	public void setMainApp(MainApp mainApp){
 		this.mainApp = mainApp;
 	}
@@ -178,13 +198,30 @@ public class PersonalFilterDialogController{
 	// ************************************************************************
 	// Tools / Asset Functions - Matrix management
 	// ************************************************************************
-	private void setMatrixSize(){
-		this.matrixNbRow	= Integer.parseInt(this.matrixNbRowTextField.getText());
-		this.matrixNbColumn	= Integer.parseInt(this.matrixNbColumnTextField.getText());
+	
+	/* Set the matrix size and reset the displayed matrix - Size must be valid*/
+	private void setMatrixSize(int row, int col){
+		this.matrixNbRow	= row;
+		this.matrixNbColumn	= col;
+	}
+
+	/* Reset the gridPane display */
+	private void reloadGridPane(){
+		this.matrixNbRowTextField.setText(Integer.toString(this.matrixNbRow));
+		this.matrixNbColumnTextField.setText(Integer.toString(this.matrixNbColumn));
+		this.matrixGridPane.getChildren().clear();
+		for(int x=0; x<this.matrixNbColumn; x++){
+			for(int y=0; y<this.matrixNbRow; y++){
+				TextField tf = new TextField();
+				tf.setPrefWidth(25);
+				tf.setText("0");
+				this.matrixGridPane.add(tf, x, y);
+			}
+		}
 	}
 
 	/* Set value of each matrix element in GridPane */
-	private void setMatrixGridPane(int[][]m){
+	private void setValuesMatrixGridPane(int[][]m){
 		int y = 0, x = 0, pos = 0;
 		for(Node node : this.matrixGridPane.getChildren()) {
 			TextField tf = (TextField)node;
