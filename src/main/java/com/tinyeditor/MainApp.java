@@ -6,8 +6,8 @@
  */
 package main.java.com.tinyeditor;
 
-import main.java.com.tinyeditor.views.PageController;
-import main.java.com.tinyeditor.views.PersonalFilterDialogController;
+import main.java.com.tinyeditor.controller.PageController;
+import main.java.com.tinyeditor.controller.PersonalFilterDialogController;
 import main.java.com.tinyeditor.filter.convolution.PersonalFilter;
 
 import java.io.IOException;
@@ -49,7 +49,7 @@ public class MainApp extends Application{
 	private void initRootLayout(){
 		try{
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("views/RootLayout.fxml"));
+			loader.setLocation(getClass().getResource("/main/java/resources/fxml/RootLayout.fxml"));
 			this.rootLayout = (BorderPane)loader.load();
 
 			//Load and place scene container
@@ -65,7 +65,7 @@ public class MainApp extends Application{
 	private void initPageView(){
 		try{
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("views/Page.fxml"));
+			loader.setLocation(getClass().getResource("/main/java/resources/fxml/Page.fxml"));
 			AnchorPane page = (AnchorPane)loader.load();
 			this.rootLayout.setCenter(page);
 
@@ -88,7 +88,7 @@ public class MainApp extends Application{
 	public void showPersonalFilterDialog(){
 		try{
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("views/PersonalFilterDialog.fxml"));
+			loader.setLocation(MainApp.class.getResource("/main/java/resources/fxml/PersonalFilterDialog.fxml"));
 			AnchorPane pageDialog = (AnchorPane)loader.load();
 
 			//Create and set the dialog page

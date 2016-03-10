@@ -1,4 +1,4 @@
-package main.java.com.tinyeditor.views;
+package main.java.com.tinyeditor.controller;
 
 import main.java.com.tinyeditor.filter.convolution.PersonalFilter;
 import main.java.com.tinyeditor.MainApp;
