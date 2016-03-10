@@ -89,6 +89,10 @@ public class PersonalFilterDialogController{
 		if(div < 1){return false; }
 		if(mNbR != 3 && mNbR != 5 && mNbR != 7 && mNbR != 9){ return false; }
 		if(mNbC != 3 && mNbR != 5 && mNbR != 7 && mNbR != 9){ return false; }
+
+		for(TextField tf : this.matrixGridPane){
+			System.out.println("A");
+		}
 		return true;
 	}
 

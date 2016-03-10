@@ -106,9 +106,4 @@ public class MainApp extends Application{
 			ex.printStackTrace();
 		}
 	}
-
-
-	// ************************************************************************
-	// TMP - Play role of 'perso filter model' / Temporary
-	// ************************************************************************
 }
