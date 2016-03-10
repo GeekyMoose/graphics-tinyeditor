@@ -99,10 +99,16 @@ public class MainApp extends Application{
 			dialogStage.setScene(scene);
 
 			PersonalFilterDialogController c = loader.getController();
+			c.setDialogStage(dialogStage);
 			dialogStage.showAndWait();
 		}
 		catch(IOException ex){
 			ex.printStackTrace();
 		}
 	}
+
+
+	// ************************************************************************
+	// TMP - Play role of 'perso filter model' / Temporary
+	// ************************************************************************
 }
