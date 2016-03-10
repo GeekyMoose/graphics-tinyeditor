@@ -52,6 +52,7 @@
                         </GridPane>
                      </children>
                   </AnchorPane>
+                  <Button layoutX="218.0" layoutY="9.0" mnemonicParsing="false" onMouseReleased="#handleSetMatrixSizeButton" text="Set size" />
                </children></AnchorPane>
             <AnchorPane prefHeight="177.0" prefWidth="399.0">
                <children>
