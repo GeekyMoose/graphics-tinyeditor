@@ -1,6 +1,13 @@
-package main.java.com.tinyeditor.filter.diphering;
+package main.java.com.tinyeditor.filter.dithering;
 
 import main.java.com.tinyeditor.filter.asset.ImageFilter;
+import main.java.com.tinyeditor.filter.asset.FilterHelper;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
 
 
 /**
@@ -14,17 +21,22 @@ public class AverageFilter implements ImageFilter{
 	//List of thresholds for each color
 	protected int[]	rThresholds;
 	protected int[]	gThresholds;
-	protected int[]	gThresholds;
+	protected int[]	bThresholds;
+	//Radius are nb of pixel for one color
+	protected int	rRadius;
+	protected int	gRadius;
+	protected int	bRadius;
+	
 
 	/**
 	 * Create a DipheringFilter with default values.
 	 * K default value is 2
 	 */
-	public DipheringFilter(){
+	public AverageFilter(){
 		int k = 2;
-		this.rThresholds = new in[1];
-		this.rThresholds = new in[1];
-		this.rThresholds = new in[1];
+		this.rThresholds = new int[1];
+		this.rThresholds = new int[1];
+		this.rThresholds = new int[1];
 	}
 
 
@@ -46,7 +58,7 @@ public class AverageFilter implements ImageFilter{
 		//Process each pixel
 		for(int y=0; y<height; y++){
 			for(int x=0; x<width; x++){
-				//Color color = this.getColorFromMatrix(pixelReader, x, y, width, height);
+				Color color = this.thresholdRGB(pixelReader.getColor(x,y));
 				pixelWriter.setColor(x,y,color);
 			}
 		}
@@ -57,6 +69,32 @@ public class AverageFilter implements ImageFilter{
 	// ************************************************************************
 	// Functions
 	// ************************************************************************
+	private Color thresholdRGB(Color color){
+		int r = (int)(255 * color.getRed());
+		int g = (int)(255 * color.getGreen());
+		int b = (int)(255 * color.getBlue());
+
+		r = this.thresholdTransform(r, this.rThresholds, this.rRadius);
+		g = this.thresholdTransform(g, this.gThresholds, this.gRadius);
+		b = this.thresholdTransform(b, this.bThresholds, this.bRadius);
+
+		return Color.rgb(r,g,b);
+	}
+
+	private int thresholdTransform(int value, int[]thresholds, int radius){
+		int v = 0;
+		for(int k=0; k<thresholds.length; k++){
+			if(value > thresholds[k]){
+				continue;
+			}
+			if(value <= thresholds[k]){
+				v = thresholds[k] - radius;
+				return v >= 0 ? v : 0;
+			}
+		}
+		return thresholds[thresholds.length - 1]+radius;
+	}
+
 	/**
 	 * Initialize the threshold values for the given image.
 	 * Matrix size if linked with current k value: 3 lines / k-1 column.
@@ -65,16 +103,15 @@ public class AverageFilter implements ImageFilter{
 	 * @param height	Image height
 	 * @param width		Image width
 	 */
-	protected void initThresholdValues(PixelReader input, int height, int width){
+	private void initThresholdValues(PixelReader input, int height, int width){
 		int[][] minmax = FilterHelper.calculMinMaxRGB(input, height, width, 255);
-		int rRadius, gRadius, bRadius; //Nb of pixel for one color
 		int nbThresholds = this.k/2;
 
 		//Set the radius values
 		//minmax[x][1] - minmax[0] means max - min (Nb values covered by pixels)
-		rRadius	= (minmax[0][1] - minmax[0][0])/this.k;
-		gRadius	= (minmax[1][1] - minmax[1][0])/this.k;
-		bRadius	= (minmax[2][1] - minmax[2][0])/this.k;
+		this.rRadius	= (minmax[0][1] - minmax[0][0])/this.k;
+		this.gRadius	= (minmax[1][1] - minmax[1][0])/this.k;
+		this.bRadius	= (minmax[2][1] - minmax[2][0])/this.k;
 
 		//Initialize the threshold array attributes
 		this.rThresholds = new int[nbThresholds];
@@ -85,9 +122,9 @@ public class AverageFilter implements ImageFilter{
 		for(int k=0; k<(this.k/2); k++){
 			//Threshold is 2*radius*k + radius away from origin.
 			//Since min is not always 0, position must be shifted by min
-			this.rThresholds[k] = minmax[0][0] + (2 * rRadius * k) + rRadius;
-			this.rThresholds[k] = minmax[1][0] + (2 * gRadius * k) + gRadius;
-			this.rThresholds[k] = minmax[2][0] + (2 * bRadius * k) + bRadius;
+			this.rThresholds[k] = minmax[0][0] + (2 * this.rRadius * k) + this.rRadius;
+			this.gThresholds[k] = minmax[1][0] + (2 * this.gRadius * k) + this.gRadius;
+			this.bThresholds[k] = minmax[2][0] + (2 * this.bRadius * k) + this.bRadius;
 		}
 	}
 

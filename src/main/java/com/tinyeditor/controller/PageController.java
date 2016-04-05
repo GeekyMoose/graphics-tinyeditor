@@ -5,6 +5,7 @@ import main.java.com.tinyeditor.image.*;
 import main.java.com.tinyeditor.filter.asset.*;
 import main.java.com.tinyeditor.filter.convolution.*;
 import main.java.com.tinyeditor.filter.functional.*;
+import main.java.com.tinyeditor.filter.dithering.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
@@ -31,6 +32,8 @@ public class PageController{
 	private Slider		contrastFilterSlider;
 	@FXML
 	private Slider		gammaCorrectionFilterSlider;
+	@FXML
+	private Slider		averageDitheringSlider;
 
 
 
@@ -52,6 +55,9 @@ public class PageController{
 	private ImageFilter edgeDetectionFilter		= new EdgeDetectionFilter();
 	private ImageFilter gaussianSmoothingFilter	= new GaussianSmoothingFilter();
 	private ImageFilter embossFilter			= new EmbossFilter();
+
+	//Diphering filters
+	private AverageFilter averageFilter			= new AverageFilter();
 
 
 	// ************************************************************************
@@ -116,6 +122,17 @@ public class PageController{
 	@FXML
 	private void handlePersoFilterBox(){
 		this.startApplyFilter(this.mainApp.getPersonalFilter());
+	}
+
+
+	// ************************************************************************
+	// Handler for dithering filters
+	// ************************************************************************
+	@FXML
+	private void handleAverageFilter(){
+		int value = (int)this.averageDitheringSlider.getValue();
+		this.averageFilter.setK(value);
+		this.startApplyFilter(this.averageFilter);
 	}
 
 

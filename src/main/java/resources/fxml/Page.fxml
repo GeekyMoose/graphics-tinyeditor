@@ -69,12 +69,12 @@
                                  </children></AnchorPane>
                         </content>
                       </TitledPane>
-                        <TitledPane animated="false" text="Gray">
+                        <TitledPane animated="false" text="Dithering">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Average" />
-                                    <Slider blockIncrement="1.0" layoutX="54.0" layoutY="32.0" majorTickUnit="2.0" max="10.0" min="2.0" minorTickCount="1" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" />
+                                    <CheckBox layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseReleased="#handleAverageFilter" text="Average" />
+                                    <Slider fx:id="averageDitheringSlider" blockIncrement="2.0" layoutX="54.0" layoutY="32.0" majorTickUnit="2.0" max="10.0" min="2.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" />
                                     <Label layoutX="34.0" layoutY="32.0" text="K" />
                                  </children>
                               </AnchorPane>
