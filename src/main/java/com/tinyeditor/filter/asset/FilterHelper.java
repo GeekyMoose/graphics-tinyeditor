@@ -33,10 +33,13 @@ public class FilterHelper{
 	/**
 	 * Calcul the min value and max value for Red, Green and Blue in image.
 	 * RGB Values are on 255. Matrix returned match: lines stand R, G and B and
-	 * columns are: min, max
+	 * columns are: min, max.
+	 * Note: format must be valid (Max possible value, 255 for instance).
 	 *
 	 * @param format	RBG value format. (Max possible value for one pixel, 255 for example)
-	 * @return	Matrix 3*2 with min/max values for RGB
+	 * @param height	Image height
+	 * @param width		Image width
+	 * @return			Matrix 3*2 with min/max values for RGB
 	 */
 	public static int[][] calculMinMaxRGB(PixelReader input, int height, int width, int format){
 		//During the process, value match the getRed/Green/Blue FX representation
