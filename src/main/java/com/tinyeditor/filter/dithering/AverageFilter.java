@@ -67,36 +67,27 @@ public class AverageFilter implements ImageFilter{
 	 */
 	protected void initThresholdValues(PixelReader input, int height, int width){
 		int[][] minmax = FilterHelper.calculMinMaxRGB(input, height, width, 255);
+		int rRadius, gRadius, bRadius; //Nb of pixel for one color
+		int nbThresholds = this.k/2;
 
-		// Range is the value max - min (Nb values covered by pixels)
-		// Step is the nb of pixel in within the range of one threshold.
-		int redRange, redStep;
-		int greenRange, greenStep;
-		int blueRange, blueStep;
-
-		//Set the range values
-		redRange	= minmax[0][1] - minmax[0][0];
-		greenRange	= minmax[1][1] - minmax[1][0];
-		blueRange	= minmax[2][1] - minmax[2][0];
-
-		//Set step values
-		redStep		= redRange/this.k;
-		greenStep	= greenRange/this.k;
-		blueStep	= blueRange/this.k;
+		//Set the radius values
+		//minmax[x][1] - minmax[0] means max - min (Nb values covered by pixels)
+		rRadius	= (minmax[0][1] - minmax[0][0])/this.k;
+		gRadius	= (minmax[1][1] - minmax[1][0])/this.k;
+		bRadius	= (minmax[2][1] - minmax[2][0])/this.k;
 
 		//Initialize the threshold array attributes
-		this.rThresholds = new int[this.k];
-		this.gThresholds = new int[this.k];
-		this.bThresholds = new int[this.k];
+		this.rThresholds = new int[nbThresholds];
+		this.gThresholds = new int[nbThresholds];
+		this.bThresholds = new int[nbThresholds];
 
 		//Calculate all
-		for(int k=0; k<this.k; k++){
-			//Threshold k is positioned k time step away from the origin. 
-			//Since the origin can be a not zero number, we have to shift by min value.
-			//Then, the threshold is actually in the middle the current step -(step/2)
-			this.rThresholds[k] = ((redStep * k)	+ minmax[0][0]) - (redStep/2);
-			this.gThresholds[k] = ((greenStep * k)	+ minmax[1][0]) - (greenStep/2);
-			this.bThresholds[k] = ((blueStep * k)	+ minmax[2][0]) - (blueStep/2);
+		for(int k=0; k<(this.k/2); k++){
+			//Threshold is 2*radius*k + radius away from origin.
+			//Since min is not always 0, position must be shifted by min
+			this.rThresholds[k] = minmax[0][0] + (2 * rRadius * k) + rRadius;
+			this.rThresholds[k] = minmax[1][0] + (2 * gRadius * k) + gRadius;
+			this.rThresholds[k] = minmax[2][0] + (2 * bRadius * k) + bRadius;
 		}
 	}
 
