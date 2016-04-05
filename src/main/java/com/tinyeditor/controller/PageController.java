@@ -57,7 +57,8 @@ public class PageController{
 	private ImageFilter embossFilter			= new EmbossFilter();
 
 	//Diphering filters
-	private AverageFilter averageFilter			= new AverageFilter();
+	private AverageFilter	averageFilter			= new AverageFilter();
+	private ImageFilter		orderedDitheringFilter	= new OrderedDitheringFilter();
 
 
 	// ************************************************************************
@@ -134,6 +135,10 @@ public class PageController{
 		this.averageFilter.setK(value);
 		this.startApplyFilter(this.averageFilter);
 	}
+	@FXML
+	private void handleOrderedDitheringFilter(){
+		this.startApplyFilter(this.orderedDitheringFilter);
+	}
 
 
 	// ************************************************************************
@@ -149,8 +154,11 @@ public class PageController{
 	// ************************************************************************
 	/* Apply a given filter to current image and update */
 	private void startApplyFilter(ImageFilter filter){
-		Image currentImg	= this.imageEditorView.getImage();
-		Image newImage		= filter.applyFilter(currentImg);
+		Image currentImg = this.imageEditorView.getImage();
+		if(currentImg == null){
+			return;
+		}
+		Image newImage = filter.applyFilter(currentImg);
 		this.imageEditorView.setImage(newImage);
 	}
 
