@@ -34,6 +34,8 @@ public class PageController{
 	private Slider		gammaCorrectionFilterSlider;
 	@FXML
 	private Slider		averageDitheringSlider;
+	@FXML
+	private Slider		orderedDitheringSlider;
 
 
 
@@ -57,8 +59,8 @@ public class PageController{
 	private ImageFilter embossFilter			= new EmbossFilter();
 
 	//Diphering filters
-	private AverageFilter	averageFilter			= new AverageFilter();
-	private ImageFilter		orderedDitheringFilter	= new OrderedDitheringFilter();
+	private AverageFilter			averageFilter			= new AverageFilter();
+	private OrderedDitheringFilter	orderedDitheringFilter	= new OrderedDitheringFilter();
 
 
 	// ************************************************************************
@@ -137,6 +139,8 @@ public class PageController{
 	}
 	@FXML
 	private void handleOrderedDitheringFilter(){
+		int value = (int)this.orderedDitheringSlider.getValue();
+		this.orderedDitheringFilter.setK(value);
 		this.startApplyFilter(this.orderedDitheringFilter);
 	}
 
