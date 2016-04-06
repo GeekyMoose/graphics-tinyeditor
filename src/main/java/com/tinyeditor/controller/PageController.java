@@ -6,6 +6,7 @@ import main.java.com.tinyeditor.filter.asset.*;
 import main.java.com.tinyeditor.filter.convolution.*;
 import main.java.com.tinyeditor.filter.functional.*;
 import main.java.com.tinyeditor.filter.dithering.*;
+import main.java.com.tinyeditor.filter.colors.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
@@ -40,6 +41,12 @@ public class PageController{
 	private Slider		orderedDitheringSliderN;
 	@FXML
 	private Slider		ErrorDiffusionSlider;
+	@FXML
+	private Slider		uniformRedPalletSlider;
+	@FXML
+	private Slider		uniformGreenPalletSlider;
+	@FXML
+	private Slider		uniformBluePalletSlider;
 
 
 
@@ -65,6 +72,9 @@ public class PageController{
 	private AverageFilter			averageFilter			= new AverageFilter();
 	private OrderedDitheringFilter	orderedDitheringFilter	= new OrderedDitheringFilter();
 	private ErrorDiffusionFilter	errorDiffusionFilter	= new ErrorDiffusionFilter();
+
+	//Color filters
+	private UniformQuantizationFilter uniformQuantizationFilter = new UniformQuantizationFilter();
 
 
 	// ************************************************************************
@@ -151,6 +161,21 @@ public class PageController{
 		int value = (int)this.ErrorDiffusionSlider.getValue();
 		this.errorDiffusionFilter.setK(value);
 		this.startApplyFilter(this.errorDiffusionFilter);
+	}
+
+
+	// ************************************************************************
+	// Handler For dialog and other
+	// ************************************************************************
+	@FXML
+	private void handleUniformQuantization(){
+		int rp = (int)this.uniformRedPalletSlider.getValue();
+		int gp = (int)this.uniformGreenPalletSlider.getValue();
+		int bp = (int)this.uniformBluePalletSlider.getValue();
+		this.uniformQuantizationFilter.setRedK(rp);
+		this.uniformQuantizationFilter.setGreenK(gp);
+		this.uniformQuantizationFilter.setBlueK(bp);
+		this.startApplyFilter(this.uniformQuantizationFilter);
 	}
 
 
