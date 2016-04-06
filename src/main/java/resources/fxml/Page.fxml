@@ -79,6 +79,8 @@
                                     <CheckBox layoutX="14.0" layoutY="85.0" mnemonicParsing="false" onMouseReleased="#handleOrderedDitheringFilter" text="Ordered Dithering" />
                                     <Label layoutX="16.0" layoutY="103.0" text="K" />
                                     <Slider fx:id="orderedDitheringSlider" blockIncrement="2.0" layoutX="43.0" layoutY="111.0" majorTickUnit="2.0" max="10.0" min="2.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" />
+                                    <Slider fx:id="orderedDitheringSliderN" blockIncrement="1.0" layoutX="43.0" layoutY="149.0" majorTickUnit="1.0" max="4.0" min="2.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" />
+                                    <Label layoutX="20.0" layoutY="149.0" text="N" />
                                  </children>
                               </AnchorPane>
                           </content>

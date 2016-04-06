@@ -36,6 +36,8 @@ public class PageController{
 	private Slider		averageDitheringSlider;
 	@FXML
 	private Slider		orderedDitheringSlider;
+	@FXML
+	private Slider		orderedDitheringSliderN;
 
 
 
@@ -140,7 +142,9 @@ public class PageController{
 	@FXML
 	private void handleOrderedDitheringFilter(){
 		int value = (int)this.orderedDitheringSlider.getValue();
+		int valueN = (int)this.orderedDitheringSliderN.getValue();
 		this.orderedDitheringFilter.setK(value);
+		this.orderedDitheringFilter.setN(valueN);
 		this.startApplyFilter(this.orderedDitheringFilter);
 	}
 

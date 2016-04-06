@@ -23,19 +23,8 @@ public class OrderedDitheringFilter implements ImageFilter{
 	protected int	bRadius;
 
 	public OrderedDitheringFilter(){
-		this.k = 4;
-		this.n = 3;
-		this.bayerMatrix = new int[][]{
-			{3,7,4},
-			{6,1,9},
-			{2,8,5}
-		};
-		/*
-		this.bayerMatrix = new int[][]{
-			{1,3},
-			{4,2}
-		};
-		*/
+		this.k = 2;
+		this.setN(2);
 	}
 
 
@@ -143,6 +132,39 @@ public class OrderedDitheringFilter implements ImageFilter{
 	public void setK(int value){
 		if(value>1 && value<255 && value%2==0){
 			this.k = value;
+		}
+	}
+
+	public void setN(int value){
+		if(value == 2 || value == 3 || value == 4){
+			this.n = value;
+			this.setBayerMatrix(value);
+		}
+	}
+
+	private void setBayerMatrix(int n){
+		switch(n){
+			case 2:
+				this.bayerMatrix = new int[][]{
+					{1,3},
+					{4,2}
+				};
+				break;
+			case 3:
+				this.bayerMatrix = new int[][]{
+					{3,7,4},
+					{6,1,9},
+					{2,8,5}
+				};
+				break;
+			case 4:
+				this.bayerMatrix = new int[][]{
+					{1,9,3,11},
+					{13,5,15,7},
+					{4,12,2,10},
+					{16,8,14,6}
+				};
+				break;
 		}
 	}
 }
