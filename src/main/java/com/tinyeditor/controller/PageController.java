@@ -38,6 +38,8 @@ public class PageController{
 	private Slider		orderedDitheringSlider;
 	@FXML
 	private Slider		orderedDitheringSliderN;
+	@FXML
+	private Slider		ErrorDiffusionSlider;
 
 
 
@@ -63,6 +65,7 @@ public class PageController{
 	//Diphering filters
 	private AverageFilter			averageFilter			= new AverageFilter();
 	private OrderedDitheringFilter	orderedDitheringFilter	= new OrderedDitheringFilter();
+	private ErrorDiffusionFilter	errorDiffusionFilter	= new ErrorDiffusionFilter();
 
 
 	// ************************************************************************
@@ -146,6 +149,12 @@ public class PageController{
 		this.orderedDitheringFilter.setK(value);
 		this.orderedDitheringFilter.setN(valueN);
 		this.startApplyFilter(this.orderedDitheringFilter);
+	}
+	@FXML
+	private void handleErrorDiffusionFilter(){
+		int value = (int)this.ErrorDiffusionSlider.getValue();
+		this.errorDiffusionFilter.setK(value);
+		this.startApplyFilter(this.errorDiffusionFilter);
 	}
 
 
