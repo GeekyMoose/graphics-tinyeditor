@@ -53,6 +53,8 @@ public class MainApp extends Application{
 		this.initPageView();
 		this.primaryStage.show();
 		this.imageEditor = new ImageEditor();
+		this.imageEditor.setImage(new Image("main/java/resources/examples/lena-color.png"));
+		this.updateImg();
 	}
 
 	/** Initialize the Root Layout and set it to primaryStage */

@@ -14,7 +14,6 @@ public class ImageEditor{
 	private	Image	processImage;
 
 	public ImageEditor(){
-		//@TODO Brut version
 		this.rawImage		= null;
 		this.processImage	= null;
 	}

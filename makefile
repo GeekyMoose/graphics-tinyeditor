@@ -44,11 +44,10 @@ clean:
 
 .PHONY: growthTree
 growthTree:
-	@mkdir $(BUILD)
-	@mkdir $(BIN)
+	@mkdir -p $(BUILD)
+	@mkdir -p $(BIN)
 
 .PHONY: cpResources
 cpResources:
 	@mkdir -p $(BUILD)/main/java/resources
 	cp -r src/main/java/resources/* $(BUILD)/main/java/resources/.
-	cp -r tmp $(BUILD)/.
