@@ -47,7 +47,6 @@ public class PageController{
 	// Attributes Model
 	// ************************************************************************
 	private MainApp		mainApp;
-	private ImageEditor imageEditor				= new ImageEditor(); //Main img
 
 	// Functional Filters
 	private BrightnessFilter		brightnessFilter		= new BrightnessFilter();
@@ -73,9 +72,6 @@ public class PageController{
 	// ************************************************************************
 	@FXML
 	private void initialize(){
-		//@TODO Temporary
-		this.imageEditor= new ImageEditor();
-		this.imageEditorView.setImage(this.imageEditor.getProcessImage());
 	}
 
 
@@ -182,5 +178,9 @@ public class PageController{
 	/* Set the linked mainApp */
 	public void setMainApp(MainApp mainApp){
 		this.mainApp = mainApp;
+	}
+
+	public void updateImg(Image img){
+		this.imageEditorView.setImage(img);
 	}
 }

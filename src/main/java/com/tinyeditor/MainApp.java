@@ -9,9 +9,12 @@ package main.java.com.tinyeditor;
 import main.java.com.tinyeditor.controller.PageController;
 import main.java.com.tinyeditor.controller.PersonalFilterDialogController;
 import main.java.com.tinyeditor.filter.convolution.PersonalFilter;
+import main.java.com.tinyeditor.controller.RootLayoutController;
+import main.java.com.tinyeditor.image.ImageEditor;
 
 import java.io.IOException;
 
+import javafx.scene.image.Image;
 import javafx.fxml.FXMLLoader;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -32,6 +35,12 @@ public class MainApp extends Application{
 	private Stage		primaryStage;
 	private BorderPane	rootLayout;
 
+	//Controller
+	private PageController pageController;
+
+	//Editor elements @TODO to place in better way
+	private ImageEditor imageEditor;
+
 	
 	// ************************************************************************
 	// Initialization - Constructors
@@ -43,6 +52,7 @@ public class MainApp extends Application{
 		this.initRootLayout();
 		this.initPageView();
 		this.primaryStage.show();
+		this.imageEditor = new ImageEditor();
 	}
 
 	/** Initialize the Root Layout and set it to primaryStage */
@@ -51,6 +61,9 @@ public class MainApp extends Application{
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/main/java/resources/fxml/RootLayout.fxml"));
 			this.rootLayout = (BorderPane)loader.load();
+
+			RootLayoutController controller = loader.getController();
+			controller.setMainApp(this);
 
 			//Load and place scene container
 			Scene scene = new Scene(this.rootLayout);
@@ -69,8 +82,8 @@ public class MainApp extends Application{
 			AnchorPane page = (AnchorPane)loader.load();
 			this.rootLayout.setCenter(page);
 
-			PageController controller = loader.getController();
-			controller.setMainApp(this);
+			this.pageController = loader.getController();
+			this.pageController.setMainApp(this);
 		}
 		catch(IOException ex){
 			ex.printStackTrace();
@@ -112,7 +125,7 @@ public class MainApp extends Application{
 
 
 	// ************************************************************************
-	// TEMPORARY - Play the role of a model to keep current Personal Filter
+	// //@TODO TEMPORARY - Play the role of a model to keep data
 	// ************************************************************************
 	private PersonalFilter f = new PersonalFilter(); //Default one
 	public void setPersonalFilter(PersonalFilter f){
@@ -121,5 +134,15 @@ public class MainApp extends Application{
 	public PersonalFilter getPersonalFilter(){
 		return this.f;
 	}
-
+	public Stage getPrimaryStage(){
+		return this.primaryStage;
+	}
+	public ImageEditor getImageEditor(){
+		return this.imageEditor;
+	}
+	public void updateImg(){
+		if(this.imageEditor.getProcessImage() != null){
+			this.pageController.updateImg(this.imageEditor.getProcessImage());
+		}
+	}
 }
