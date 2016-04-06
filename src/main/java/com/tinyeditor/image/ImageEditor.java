@@ -19,6 +19,11 @@ public class ImageEditor{
 		this.processImage	= null;
 	}
 
+	public Image reset(){
+		this.processImage = this.rawImage;
+		return this.processImage;
+	}
+
 	// ************************************************************************
 	// Getters - Setters
 	// ************************************************************************

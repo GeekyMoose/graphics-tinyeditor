@@ -35,6 +35,12 @@ public class RootLayoutController{
 		}
 	}
 
+	@FXML
+	private void handleResetImage(){
+		this.mainApp.getImageEditor().reset();
+		this.mainApp.updateImg();
+	}
+
 	public void setMainApp(MainApp mainApp){
 		this.mainApp = mainApp;
 	}
