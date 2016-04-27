@@ -1,6 +1,7 @@
 package com.tinyeditor.controller;
 
 import com.tinyeditor.MainApp;
+import com.tinyeditor.draw.DrawLine;
 import com.tinyeditor.filter.asset.*;
 import com.tinyeditor.filter.convolution.*;
 import com.tinyeditor.filter.functional.*;
@@ -80,6 +81,16 @@ public class PageController{
 	// ************************************************************************
 	@FXML
 	private void initialize(){
+
+		//Set mouse listener for ImageView
+		this.imageEditorView.setOnMouseClicked(e -> {
+			Image currentImg = this.imageEditorView.getImage();
+			if(currentImg == null){
+				return;
+			}
+			Image newImage = DrawLine.drawMidPointLine(currentImg, (int)e.getX(), (int)e.getY());
+			this.imageEditorView.setImage(newImage);
+		});
 	}
 
 
