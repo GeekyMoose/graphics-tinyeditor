@@ -1,6 +1,7 @@
 package com.tinyeditor.controller;
 
 import com.tinyeditor.MainApp;
+import com.tinyeditor.draw.DrawCirle;
 import com.tinyeditor.draw.DrawLine;
 import com.tinyeditor.filter.asset.*;
 import com.tinyeditor.filter.convolution.*;
@@ -82,13 +83,15 @@ public class PageController{
 	@FXML
 	private void initialize(){
 
+		//@TODO To refractor
 		//Set mouse listener for ImageView
 		this.imageEditorView.setOnMouseClicked(e -> {
 			Image currentImg = this.imageEditorView.getImage();
 			if(currentImg == null){
 				return;
 			}
-			Image newImage = DrawLine.drawMidPointLine(currentImg, (int)e.getX(), (int)e.getY());
+			//Image newImage = DrawLine.drawMidPointLine(currentImg, (int)e.getX(), (int)e.getY());
+			Image newImage = DrawCirle.drawMidPointLine(currentImg, (int)e.getX(), (int)e.getY(), 20);
 			this.imageEditorView.setImage(newImage);
 		});
 	}
