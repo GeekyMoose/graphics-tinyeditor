@@ -1,11 +1,10 @@
-package main.java.com.tinyeditor.controller;
+package com.tinyeditor.controller;
 
-import main.java.com.tinyeditor.filter.convolution.PersonalFilter;
-import main.java.com.tinyeditor.MainApp;
+import com.tinyeditor.filter.convolution.PersonalFilter;
+import com.tinyeditor.MainApp;
 
 import java.lang.NumberFormatException;
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;

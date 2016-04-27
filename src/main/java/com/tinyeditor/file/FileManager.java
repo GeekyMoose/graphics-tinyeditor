@@ -1,4 +1,4 @@
-package main.java.com.tinyeditor.file;
+package com.tinyeditor.file;
 
 import java.io.File;
 import java.io.IOException;

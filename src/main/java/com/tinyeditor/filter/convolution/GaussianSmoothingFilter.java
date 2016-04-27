@@ -1,4 +1,4 @@
-package main.java.com.tinyeditor.filter.convolution;
+package com.tinyeditor.filter.convolution;
 
 /**
  *

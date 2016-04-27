@@ -1,7 +1,7 @@
-package main.java.com.tinyeditor.filter.convolution;
+package com.tinyeditor.filter.convolution;
 
-import main.java.com.tinyeditor.filter.asset.FilterHelper;
-import main.java.com.tinyeditor.filter.asset.ImageFilter;
+import com.tinyeditor.filter.asset.FilterHelper;
+import com.tinyeditor.filter.asset.ImageFilter;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;

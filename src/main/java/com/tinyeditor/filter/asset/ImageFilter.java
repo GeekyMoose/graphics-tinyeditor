@@ -1,4 +1,4 @@
-package main.java.com.tinyeditor.filter.asset;
+package com.tinyeditor.filter.asset;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;

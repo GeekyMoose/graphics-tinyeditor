@@ -1,4 +1,4 @@
-package main.java.com.tinyeditor.image;
+package com.tinyeditor.image;
 
 import javafx.scene.image.Image;
 

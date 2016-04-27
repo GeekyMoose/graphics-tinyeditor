@@ -1,4 +1,4 @@
-package main.java.com.tinyeditor.filter.functional;
+package com.tinyeditor.filter.functional;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;

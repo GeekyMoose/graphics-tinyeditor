@@ -1,7 +1,7 @@
-package main.java.com.tinyeditor.filter.colors;
+package com.tinyeditor.filter.colors;
 
-import main.java.com.tinyeditor.filter.asset.ImageFilter;
-import main.java.com.tinyeditor.filter.asset.FilterHelper;
+import com.tinyeditor.filter.asset.ImageFilter;
+import com.tinyeditor.filter.asset.FilterHelper;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;

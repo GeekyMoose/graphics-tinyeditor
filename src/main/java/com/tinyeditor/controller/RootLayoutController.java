@@ -1,11 +1,10 @@
-package main.java.com.tinyeditor.controller;
+package com.tinyeditor.controller;
 
-import main.java.com.tinyeditor.file.FileManager;
-import main.java.com.tinyeditor.MainApp;
+import com.tinyeditor.file.FileManager;
+import com.tinyeditor.MainApp;
 
 import java.io.File;
 import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 

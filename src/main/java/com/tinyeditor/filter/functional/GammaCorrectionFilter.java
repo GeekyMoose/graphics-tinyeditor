@@ -1,6 +1,6 @@
-package main.java.com.tinyeditor.filter.functional;
+package com.tinyeditor.filter.functional;
 
-import main.java.com.tinyeditor.filter.asset.FilterHelper;
+import com.tinyeditor.filter.asset.FilterHelper;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;

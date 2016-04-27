@@ -1,17 +1,15 @@
-package main.java.com.tinyeditor.controller;
+package com.tinyeditor.controller;
 
-import main.java.com.tinyeditor.MainApp;
-import main.java.com.tinyeditor.image.*;
-import main.java.com.tinyeditor.filter.asset.*;
-import main.java.com.tinyeditor.filter.convolution.*;
-import main.java.com.tinyeditor.filter.functional.*;
-import main.java.com.tinyeditor.filter.dithering.*;
-import main.java.com.tinyeditor.filter.colors.*;
+import com.tinyeditor.MainApp;
+import com.tinyeditor.filter.asset.*;
+import com.tinyeditor.filter.convolution.*;
+import com.tinyeditor.filter.functional.*;
+import com.tinyeditor.filter.dithering.*;
+import com.tinyeditor.filter.colors.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
-import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 
 
@@ -68,7 +66,7 @@ public class PageController{
 	private ImageFilter gaussianSmoothingFilter	= new GaussianSmoothingFilter();
 	private ImageFilter embossFilter			= new EmbossFilter();
 
-	//Diphering filters
+	//Dithering filters
 	private AverageFilter			averageFilter			= new AverageFilter();
 	private OrderedDitheringFilter	orderedDitheringFilter	= new OrderedDitheringFilter();
 	private ErrorDiffusionFilter	errorDiffusionFilter	= new ErrorDiffusionFilter();

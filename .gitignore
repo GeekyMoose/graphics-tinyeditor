@@ -2,6 +2,10 @@
 target
 tmp
 
+out
+.idea
+*.iml
+
 # Generated part
 # Created by https://www.gitignore.io/api/java
 

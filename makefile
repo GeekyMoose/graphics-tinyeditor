@@ -14,16 +14,20 @@ BUILD		= target
 BIN			= bin
 
 
+
+# -----------------------------------------------------------------------------
+# Compilation - Execution
+# -----------------------------------------------------------------------------
 .PHONY: all
 all: clean compile
 
 .PHONY:compile
 compile: growthTree cpResources
-	$(JC) -d $(BUILD) -sourcepath src src/main/java/com/tinyeditor/MainApp.java
+	$(JC) -d $(BUILD) -cp src/main/java src/main/java/com/tinyeditor/MainApp.java
 
 .PHONY: run
 run:
-	$(JVM) -cp $(BUILD) main.java.com.tinyeditor.MainApp
+	$(JVM) -cp $(BUILD) com.tinyeditor.MainApp
 
 .PHONY: jar
 jar: compile manifest
@@ -34,9 +38,12 @@ jar: compile manifest
 manifest:
 	echo "Manifest-Version: 1.0" > $(BUILD)/manifest.mf
 	echo "Created-By: Constantin (Makefile generation)" >> $(BUILD)/manifest.mf
-	echo "Main-Class: main.java.com.tinyeditor.MainApp" >> $(BUILD)/manifest.mf
+	echo "Main-Class: com.tinyeditor.MainApp" >> $(BUILD)/manifest.mf
 
 
+# -----------------------------------------------------------------------------
+# Various
+# -----------------------------------------------------------------------------
 .PHONY: clean
 clean:
 	-rm -rf $(BUILD)

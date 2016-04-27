@@ -1,16 +1,10 @@
-/*
- * Tiny Editor is a samll version of image editor
- *
- * Date:	March 7, 2016
- * Author:	Constantin MASSON
- */
-package main.java.com.tinyeditor;
+package com.tinyeditor;
 
-import main.java.com.tinyeditor.controller.PageController;
-import main.java.com.tinyeditor.controller.PersonalFilterDialogController;
-import main.java.com.tinyeditor.filter.convolution.PersonalFilter;
-import main.java.com.tinyeditor.controller.RootLayoutController;
-import main.java.com.tinyeditor.image.ImageEditor;
+import com.tinyeditor.controller.PageController;
+import com.tinyeditor.controller.PersonalFilterDialogController;
+import com.tinyeditor.filter.convolution.PersonalFilter;
+import com.tinyeditor.controller.RootLayoutController;
+import com.tinyeditor.image.ImageEditor;
 
 import java.io.IOException;
 
