@@ -90,8 +90,8 @@ public class PageController{
 			if(currentImg == null){
 				return;
 			}
-			//Image newImage = DrawLine.drawMidPointLine(currentImg, (int)e.getX(), (int)e.getY());
-			Image newImage = DrawCirle.drawMidPointLine(currentImg, (int)e.getX(), (int)e.getY(), 20);
+			Image newImage = DrawLine.drawMidPointLine(currentImg, (int)e.getX(), (int)e.getY());
+			//Image newImage = DrawCirle.drawMidPointLine(currentImg, (int)e.getX(), (int)e.getY(), 20);
 			this.imageEditorView.setImage(newImage);
 		});
 	}

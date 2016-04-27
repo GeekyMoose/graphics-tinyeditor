@@ -47,7 +47,7 @@ public class MainApp extends Application{
 		this.initPageView();
 		this.primaryStage.show();
 		this.imageEditor = new ImageEditor();
-		this.imageEditor.setImage(new Image("main/java/resources/examples/lena-color.png"));
+		this.imageEditor.setImage(new Image("/resources/examples/lena-color.png"));
 		this.updateImg();
 	}
 
@@ -55,7 +55,7 @@ public class MainApp extends Application{
 	private void initRootLayout(){
 		try{
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("/main/java/resources/fxml/RootLayout.fxml"));
+			loader.setLocation(getClass().getResource("/resources/fxml/RootLayout.fxml"));
 			this.rootLayout = (BorderPane)loader.load();
 
 			RootLayoutController controller = loader.getController();
@@ -74,7 +74,7 @@ public class MainApp extends Application{
 	private void initPageView(){
 		try{
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("/main/java/resources/fxml/Page.fxml"));
+			loader.setLocation(getClass().getResource("/resources/fxml/Page.fxml"));
 			AnchorPane page = (AnchorPane)loader.load();
 			this.rootLayout.setCenter(page);
 
@@ -97,7 +97,7 @@ public class MainApp extends Application{
 	public void showPersonalFilterDialog(){
 		try{
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("/main/java/resources/fxml/PersonalFilterDialog.fxml"));
+			loader.setLocation(MainApp.class.getResource("/resources/fxml/PersonalFilterDialog.fxml"));
 			AnchorPane pageDialog = (AnchorPane)loader.load();
 
 			//Create and set the dialog page

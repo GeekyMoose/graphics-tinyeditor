@@ -19,7 +19,7 @@ public class DrawLine {
 		int height	= (int)image.getHeight();
 		int width	= (int)image.getWidth();
 		//Set the pixel reader and writer
-		PixelReader		pixelReader	= image.getPixelReader();
+		PixelReader     pixelReader	= image.getPixelReader();
 		WritableImage   wimage		= new WritableImage(width, height);
 		PixelWriter     pixelWriter = wimage.getPixelWriter();
 

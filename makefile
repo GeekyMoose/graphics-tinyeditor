@@ -32,7 +32,7 @@ run:
 .PHONY: jar
 jar: compile manifest
 	cd $(BUILD);echo "cd in $(BUILD)";\
-	jar -cvmf manifest.mf tinyeditor.jar main
+	jar -cvmf manifest.mf tinyeditor.jar *
 
 .PHONY: manifest
 manifest:
@@ -56,5 +56,5 @@ growthTree:
 
 .PHONY: cpResources
 cpResources:
-	@mkdir -p $(BUILD)/main/java/resources
-	cp -r src/main/java/resources/* $(BUILD)/main/java/resources/.
+	@mkdir -p $(BUILD)/resources
+	cp -r src/main/java/resources/* $(BUILD)/resources/.
