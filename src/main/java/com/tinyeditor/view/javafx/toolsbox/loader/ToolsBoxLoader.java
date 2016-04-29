@@ -1,6 +1,8 @@
 package com.tinyeditor.view.javafx.toolsbox.loader;
 
 import com.tinyeditor.view.javafx.FxApp;
+import com.tinyeditor.view.javafx.editor.EditorFxController;
+import com.tinyeditor.view.javafx.toolsbox.controllers.GeneralFiltersController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
@@ -14,29 +16,60 @@ import java.io.IOException;
  * @since   Apr 27, 2016
  * @author  Constantin MASSON
  */
-public abstract class ToolsBoxLoader {
-	private static final String PATH = "/resources/fxml/toolsbox";
+public class ToolsBoxLoader {
+	private final String PATH = "/resources/fxml/toolsbox";
+	private FxApp fxApp;
+	private EditorFxController editor;
 
 
 	// *************************************************************************
-	// General
+	// Public access - Loader
 	// *************************************************************************
+	/**
+	 * Load the ToolsBox component and return its JX elements.
+	 *
+	 * @param app           Application to link with
+	 * @param c             Element managed by the ToolsBox
+	 * @return              ToolsBox FX Component
+	 * @throws IOException  if unable to load all ToolsBox components
+	 */
+	public static Accordion load(FxApp app, EditorFxController c) throws IOException {
+		ToolsBoxLoader tbl = new ToolsBoxLoader(app, c);
+		return tbl.loadToolsBox();
+	}
+
+
+	// *************************************************************************
+	// Private - Initialization
+	// *************************************************************************
+
+	/**
+	 * Create a new ToolsBoxLoader.
+	 * Usually, only one is temporary created through 'load' function therefore,
+	 * constructor is private.
+	 *
+	 * @param app   Application to link with
+	 * @param c     Element managed by the ToolsBox
+	 */
+	private ToolsBoxLoader(FxApp app, EditorFxController c){
+		this.fxApp  = app;
+		this.editor = c;
+	}
 
 	/**
 	 * Load and get the ToolsBox elements.
 	 * Models managed by this toolsBox are recovered from parameter.
 	 *
-	 * @param app           Parent application.
 	 * @return              The ToolsBox view.
 	 * @throws IOException  if unable to load.
 	 */
-	public static Accordion getLoadedToolsBox(FxApp app) throws IOException {
+	private Accordion loadToolsBox() throws IOException {
 		Accordion accordion = new Accordion();
 		//Load and add each filters...
-		accordion.getPanes().add(loadGeneralFilters(app));
-		accordion.getPanes().add(loadConvolutionFilters(app));
-		accordion.getPanes().add(loadDitheringFilters(app));
-		accordion.getPanes().add(loadColorFilters(app));
+		accordion.getPanes().add(this.loadGeneralFilters());
+		accordion.getPanes().add(this.loadConvolutionFilters());
+		accordion.getPanes().add(this.loadDitheringFilters());
+		accordion.getPanes().add(this.loadColorFilters());
 		return accordion;
 	}
 
@@ -44,27 +77,32 @@ public abstract class ToolsBoxLoader {
 	// *************************************************************************
 	// Content Loaders
 	// *************************************************************************
-	private static TitledPane loadGeneralFilters(FxApp app) throws IOException {
+	private TitledPane loadGeneralFilters() throws IOException {
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(ToolsBoxLoader.class.getResource(PATH+"/generalFilters.fxml"));
-		return loader.load(); //Throw IOException if error
+		loader.setLocation(this.getClass().getResource(this.PATH+"/generalFilters.fxml"));
+		TitledPane elt = loader.load(); //Throw IOException if error
+		//Init controller
+		GeneralFiltersController c = loader.getController();
+		c.setMainApp(this.fxApp);
+		c.setEditor(this.editor);
+		return elt;
 	}
 
-	private static TitledPane loadConvolutionFilters(FxApp app) throws IOException {
+	private TitledPane loadConvolutionFilters() throws IOException {
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(ToolsBoxLoader.class.getResource(PATH+"/convolutionFilters.fxml"));
+		loader.setLocation(this.getClass().getResource(PATH+"/convolutionFilters.fxml"));
 		return loader.load();
 	}
 
-	private static TitledPane loadDitheringFilters(FxApp app) throws IOException {
+	private TitledPane loadDitheringFilters() throws IOException {
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(ToolsBoxLoader.class.getResource(PATH + "/ditheringFilters.fxml"));
+		loader.setLocation(this.getClass().getResource(PATH + "/ditheringFilters.fxml"));
 		return loader.load();
 	}
 
-	private static TitledPane loadColorFilters(FxApp app) throws IOException {
+	private TitledPane loadColorFilters() throws IOException {
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(ToolsBoxLoader.class.getResource(PATH + "/colorFilters.fxml"));
+		loader.setLocation(this.getClass().getResource(PATH + "/colorFilters.fxml"));
 		return loader.load();
 	}
 }

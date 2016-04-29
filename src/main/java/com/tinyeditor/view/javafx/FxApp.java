@@ -1,6 +1,8 @@
 package com.tinyeditor.view.javafx;
 
 import com.tinyeditor.editor.Editor;
+import com.tinyeditor.view.javafx.editor.EditorFxController;
+import com.tinyeditor.view.javafx.editor.EditorFxLoader;
 import com.tinyeditor.view.javafx.rootlayout.RootLayoutController;
 import com.tinyeditor.view.javafx.toolsbox.loader.ToolsBoxLoader;
 import javafx.application.Application;
@@ -11,6 +13,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/*
+ * Dev note:
+ * FxApp play the role of main point for the view but also main controller at
+ * the same time.
+ * This explain that this class exceptionally init some models and works as a controller.
+ */
 /**
  * JavaFx Application.
  * Start the application with JavaFX View rendering.
@@ -63,7 +71,10 @@ public class FxApp extends Application{
 	 * @throws IOException if error occurs.
 	 */
 	private void loadComponents() throws IOException {
-		this.rootLayout.setRight(ToolsBoxLoader.getLoadedToolsBox(this));
+		EditorFxController editorFxController = EditorFxLoader.load(this);
+
+		this.rootLayout.setRight(ToolsBoxLoader.load(this, editorFxController));
+		this.rootLayout.setCenter(editorFxController.getView());
 	}
 
 	private void initModels(){

@@ -1,8 +1,13 @@
 package com.tinyeditor.view.javafx.toolsbox.controllers;
 
+import com.tinyeditor.modules.filter.asset.ImageFilter;
+import com.tinyeditor.view.javafx.FxApp;
+import com.tinyeditor.view.javafx.editor.EditorFxController;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.image.Image;
 
 /**
  * Controller for General Filters.
@@ -11,21 +16,30 @@ import javafx.scene.control.Slider;
  * @author  Constantin MASSON
  */
 public class GeneralFiltersController {
+	private FxApp mainApp; //Parent FxApplication
+	private EditorFxController editor; //Data managed (Through another controller)
+
 	// *************************************************************************
 	// Components
 	// *************************************************************************
 	@FXML
-	private Slider  brightnessSlider;
+	private Slider      brightnessSlider;
 	@FXML
-	private Slider  contrastSlider;
+	private Slider      contrastSlider;
 	@FXML
-	private Slider  gammaSlider;
+	private Slider      gammaSlider;
 	@FXML
-	private Label   brightnessValueLabel;
+	private Label       brightnessValueLabel;
 	@FXML
-	private Label   contrastValueLabel;
+	private Label       contrastValueLabel;
 	@FXML
-	private Label   gammaValueLabel;
+	private Label       gammaValueLabel;
+	@FXML
+	private CheckBox    brightnessCheckBox;
+	@FXML
+	private CheckBox    contrastCheckBox;
+	@FXML
+	private CheckBox    gammaCheckBox;
 
 
 	// *************************************************************************
@@ -51,5 +65,28 @@ public class GeneralFiltersController {
 	private void handleGammaSlider(){
 		int value = (int)this.gammaSlider.getValue();
 		this.gammaValueLabel.setText(String.valueOf(value));
+	}
+
+
+	// ************************************************************************
+	// Controller Inner Functions
+	// ************************************************************************
+	/* Apply a given filter to current image and update */
+	private void startApplyFilter(ImageFilter filter){
+		Image currentImg = this.mainApp.getEditor().getImage().getProcessImage();
+		if(currentImg == null){
+			return;
+		}
+		Image newImage = filter.applyFilter(currentImg);
+		//this.imageEditorView.setImage(newImage);
+	}
+
+	/** Set the linked mainApp */
+	public void setMainApp(FxApp mainApp){
+		this.mainApp = mainApp;
+	}
+	/** Set the editor managed by the filters */
+	public void setEditor(EditorFxController controller){
+		this.editor = controller;
 	}
 }
