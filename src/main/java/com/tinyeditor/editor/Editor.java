@@ -1,5 +1,7 @@
 package com.tinyeditor.editor;
 
+import com.tinyeditor.modules.filter.convolution.PersonalFilter;
+
 /**
  * Represent the Editor content of the application.
  *
@@ -8,12 +10,23 @@ package com.tinyeditor.editor;
  */
 public class Editor {
 	private ImageEditor imageEditor;
+	private PersonalFilter personalFilter;
 
 	public Editor(){
-		this.imageEditor = new ImageEditor();
+		this.imageEditor    = new ImageEditor();
+		this.personalFilter = new PersonalFilter(); //Default perso filter
 	}
 
+	// *************************************************************************
+	// Getters - Setters
+	// *************************************************************************
 	public ImageEditor getImageEditor(){
 		return this.imageEditor;
+	}
+	public PersonalFilter getPersonalFilter(){
+		return this.personalFilter;
+	}
+	public void setPersonalFilter(PersonalFilter filter){
+		this.personalFilter = filter;
 	}
 }

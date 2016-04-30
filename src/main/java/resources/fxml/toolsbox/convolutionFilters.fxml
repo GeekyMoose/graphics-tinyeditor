@@ -30,8 +30,8 @@
                   <Label text="Sharpen" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Edge detection" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label text="Emboss" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                  <CheckBox mnemonicParsing="false" GridPane.rowIndex="5" />
-                  <Button mnemonicParsing="false" text="Edit Personal Filter" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <CheckBox fx:id="persoFilterCheckBox" mnemonicParsing="false" onMouseReleased="#persoFilterCheckBoxClicked" GridPane.rowIndex="5" />
+                  <Button mnemonicParsing="false" onMouseReleased="#handleEditPersoFilter" text="Edit Personal Filter" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                </children>
             </GridPane>
          </children>
