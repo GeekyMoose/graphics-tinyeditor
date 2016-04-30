@@ -28,6 +28,14 @@ public class EditorFxController {
 		this.model.getImageEditor().update(newImage); //Update model
 		this.imageViewPanel.setImage(newImage); //Update view
 	}
+	public void resetImage(){
+		this.model.getImageEditor().reset();
+		this.imageViewPanel.setImage(this.model.getImageEditor().getProcessImage());
+	}
+	public void setImage(Image image){
+		this.model.getImageEditor().setImage(image);
+		this.imageViewPanel.setImage(image);
+	}
 
 
 	// *************************************************************************

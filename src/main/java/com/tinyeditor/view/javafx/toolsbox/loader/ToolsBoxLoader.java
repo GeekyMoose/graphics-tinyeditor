@@ -15,6 +15,10 @@ import java.io.IOException;
 /**
  * Loader for Tools Panel.
  * ToolsPanel is the box with all possible filters, colors to apply etc.
+ * Each filter view is inflated, loaded (Controller is created) and then,
+ * added in the toolsBox component.
+ *
+ * The loaded ToolsBox component can be recovered in the application.
  *
  * @since   Apr 27, 2016
  * @author  Constantin MASSON
