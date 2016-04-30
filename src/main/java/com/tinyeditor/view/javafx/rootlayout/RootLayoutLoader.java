@@ -94,6 +94,6 @@ public class RootLayoutLoader {
 		this.rootLayout.setCenter(this.editorFxController.getView());
 
 		//Load default image in editor
-		this.editorFxController.updateImage(new Image(Constants.DEFAULT_IMG));
+		this.editorFxController.setImage(new Image(Constants.DEFAULT_IMG));
 	}
 }
