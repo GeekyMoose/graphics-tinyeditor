@@ -1,13 +1,15 @@
 package com.tinyeditor.view.javafx.toolsbox.controllers;
 
-import com.tinyeditor.modules.filter.asset.ImageFilter;
+import com.tinyeditor.modules.filter.functional.BrightnessFilter;
+import com.tinyeditor.modules.filter.functional.ContrastFilter;
+import com.tinyeditor.modules.filter.functional.GammaCorrectionFilter;
+import com.tinyeditor.modules.filter.functional.InversionFilter;
 import com.tinyeditor.view.javafx.FxApp;
 import com.tinyeditor.view.javafx.editor.EditorFxController;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
 
 /**
  * Controller for General Filters.
@@ -16,8 +18,8 @@ import javafx.scene.image.Image;
  * @author  Constantin MASSON
  */
 public class GeneralFiltersController {
-	private FxApp mainApp; //Parent FxApplication
-	private EditorFxController editor; //Data managed (Through another controller)
+	private FxApp               mainApp; //Parent FxApplication
+	private EditorFxController  editor; //Data managed (Through another controller)
 
 	// *************************************************************************
 	// Components
@@ -47,45 +49,59 @@ public class GeneralFiltersController {
 	// *************************************************************************
 	@FXML
 	private void handleInversionBox(){
+		this.editor.applyFilter(new InversionFilter());
 	}
 
 	@FXML
 	private void handleBrightnessSlider(){
 		int value = (int)this.brightnessSlider.getValue();
 		this.brightnessValueLabel.setText(String.valueOf(value));
+		BrightnessFilter filter = new BrightnessFilter();
+		filter.setCoef(value);
+		//Apply filter only if checkbox selected
+		if(this.brightnessCheckBox.isSelected()){
+			this.editor.applyFilter(filter);
+		}
 	}
 
 	@FXML
 	private void handleContrastSlider(){
-		int value = (int)this.contrastSlider.getValue();
+		double value = this.contrastSlider.getValue();
 		this.contrastValueLabel.setText(String.valueOf(value));
+		ContrastFilter filter = new ContrastFilter();
+		filter.setCoef(value);
+		//Apply filter if checkbox selected
+		if(this.contrastCheckBox.isSelected()){
+			this.editor.applyFilter(filter);
+		}
 	}
 
 	@FXML
 	private void handleGammaSlider(){
-		int value = (int)this.gammaSlider.getValue();
+		double value = this.gammaSlider.getValue();
 		this.gammaValueLabel.setText(String.valueOf(value));
-	}
-
-
-	// ************************************************************************
-	// Controller Inner Functions
-	// ************************************************************************
-	/* Apply a given filter to current image and update */
-	private void startApplyFilter(ImageFilter filter){
-		Image currentImg = this.mainApp.getEditor().getImage().getProcessImage();
-		if(currentImg == null){
-			return;
+		GammaCorrectionFilter filter = new GammaCorrectionFilter();
+		filter.setCoef(value);
+		//Apply if checkbox selected
+		if(this.gammaCheckBox.isSelected()){
+			this.editor.applyFilter(filter);
 		}
-		Image newImage = filter.applyFilter(currentImg);
-		//this.imageEditorView.setImage(newImage);
 	}
 
-	/** Set the linked mainApp */
+
+	// ************************************************************************
+	// Getters - Setters
+	// ************************************************************************
+	/**
+	 * Set the linked mainApp
+	 * */
 	public void setMainApp(FxApp mainApp){
 		this.mainApp = mainApp;
 	}
-	/** Set the editor managed by the filters */
+
+	/**
+	 * Set the editor managed by the filters
+	 * */
 	public void setEditor(EditorFxController controller){
 		this.editor = controller;
 	}

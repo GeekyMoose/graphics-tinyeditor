@@ -17,9 +17,9 @@ import java.io.IOException;
  * @author  Constantin MASSON
  */
 public class ToolsBoxLoader {
-	private final String PATH = "/resources/fxml/toolsbox";
-	private FxApp fxApp;
-	private EditorFxController editor;
+	private final String        PATH = "/resources/fxml/toolsbox";
+	private FxApp               fxApp;
+	private EditorFxController  editor;
 
 
 	// *************************************************************************

@@ -1,6 +1,7 @@
 package com.tinyeditor.view.javafx;
 
 import com.tinyeditor.editor.Editor;
+import com.tinyeditor.main.Constants;
 import com.tinyeditor.view.javafx.editor.EditorFxController;
 import com.tinyeditor.view.javafx.editor.EditorFxLoader;
 import com.tinyeditor.view.javafx.rootlayout.RootLayoutController;
@@ -8,6 +9,7 @@ import com.tinyeditor.view.javafx.toolsbox.loader.ToolsBoxLoader;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -30,9 +32,6 @@ public class FxApp extends Application{
 	private Stage       primaryStage;
 	private BorderPane  rootLayout;
 
-	//Model (Since the program must start from FxApp, the model creation is here)
-	private Editor      editor;
-
 
 	// *************************************************************************
 	// Start / Loading functions
@@ -43,7 +42,6 @@ public class FxApp extends Application{
 		this.loadRootLayout();
 		this.primaryStage.setTitle("TinyEditor");
 		this.primaryStage.show();
-		this.initModels();
 		this.loadComponents();
 	}
 
@@ -71,14 +69,15 @@ public class FxApp extends Application{
 	 * @throws IOException if error occurs.
 	 */
 	private void loadComponents() throws IOException {
-		EditorFxController editorFxController = EditorFxLoader.load(this);
+		//Load the Editor component (Create the editor component here)
+		EditorFxController editorFxController = EditorFxLoader.load(this, new Editor());
 
+		//Place components in rootLayout
 		this.rootLayout.setRight(ToolsBoxLoader.load(this, editorFxController));
 		this.rootLayout.setCenter(editorFxController.getView());
-	}
 
-	private void initModels(){
-		this.editor = new Editor();
+		//Load default image in editor
+		editorFxController.updateImage(new Image(Constants.DEFAULT_IMG));
 	}
 
 
@@ -87,8 +86,5 @@ public class FxApp extends Application{
 	// *************************************************************************
 	public Stage getPrimaryStage(){
 		return this.primaryStage;
-	}
-	public Editor getEditor(){
-		return this.editor;
 	}
 }

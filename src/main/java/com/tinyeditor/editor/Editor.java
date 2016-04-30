@@ -7,12 +7,13 @@ package com.tinyeditor.editor;
  * @author  Constantin MASSON
  */
 public class Editor {
-	private ImageEditor image;
+	private ImageEditor imageEditor;
 
-	public void setImage(ImageEditor img){
-		this.image = img;
+	public Editor(){
+		this.imageEditor = new ImageEditor();
 	}
-	public ImageEditor getImage(){
-		return this.image;
+
+	public ImageEditor getImageEditor(){
+		return this.imageEditor;
 	}
 }

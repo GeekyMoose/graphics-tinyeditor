@@ -29,11 +29,11 @@
                <children>
                   <CheckBox mnemonicParsing="false" onMouseClicked="#handleInversionBox" />
                   <Slider fx:id="brightnessSlider" blockIncrement="5.0" majorTickUnit="50.0" min="-100.0" minorTickCount="1" onKeyReleased="#handleBrightnessSlider" onMouseReleased="#handleBrightnessSlider" showTickMarks="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="0.0" GridPane.rowIndex="1" />
+                  <CheckBox fx:id="brightnessCheckBox" mnemonicParsing="false" prefHeight="18.0" prefWidth="0.0" GridPane.rowIndex="1" />
                   <Label text="Inversion" GridPane.columnIndex="1" />
-                  <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="5.0" GridPane.rowIndex="2" />
+                  <CheckBox fx:id="contrastCheckBox" mnemonicParsing="false" prefHeight="18.0" prefWidth="5.0" GridPane.rowIndex="2" />
                   <Slider fx:id="contrastSlider" blockIncrement="0.1" majorTickUnit="1.0" max="2.0" onKeyReleased="#handleContrastSlider" onMouseReleased="#handleContrastSlider" showTickMarks="true" value="1.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <CheckBox mnemonicParsing="false" GridPane.rowIndex="3" />
+                  <CheckBox fx:id="gammaCheckBox" mnemonicParsing="false" GridPane.rowIndex="3" />
                   <Slider fx:id="gammaSlider" blockIncrement="0.1" majorTickUnit="1.0" max="2.0" onKeyReleased="#handleGammaSlider" onMouseReleased="#handleGammaSlider" showTickMarks="true" value="1.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                   <Label text="Brightness" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Contrast" GridPane.columnIndex="1" GridPane.rowIndex="2" />

@@ -1,5 +1,6 @@
 package com.tinyeditor.view.javafx.editor;
 
+import com.tinyeditor.editor.Editor;
 import com.tinyeditor.view.javafx.FxApp;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.BorderPane;
@@ -13,9 +14,10 @@ import java.io.IOException;
  * @author  Constantin MASSON
  */
 public class EditorFxLoader {
-	private final String PATH = "/resources/fxml/app";
+	private final String        PATH = "/resources/fxml/app";
 	private FxApp               fxApp;
 	private EditorFxController  controller;
+	private Editor              model; //Model managed
 
 
 	// *************************************************************************
@@ -30,8 +32,8 @@ public class EditorFxLoader {
 	 * @return              The Editor's controller.
 	 * @throws IOException  if unable to create and load.
 	 */
-	public static EditorFxController load(FxApp app) throws IOException {
-		EditorFxLoader loader = new EditorFxLoader(app);
+	public static EditorFxController load(FxApp app, Editor editor) throws IOException {
+		EditorFxLoader loader = new EditorFxLoader(app, editor);
 		loader.loadEditorPanel();
 		return loader.getController();
 	}
@@ -40,8 +42,9 @@ public class EditorFxLoader {
 	// *************************************************************************
 	// Private - Initialization
 	// *************************************************************************
-	private EditorFxLoader(FxApp app){
-		this.fxApp = app;
+	private EditorFxLoader(FxApp app, Editor editor){
+		this.model  = editor;
+		this.fxApp  = app;
 	}
 
 	/**
@@ -58,6 +61,7 @@ public class EditorFxLoader {
 		this.controller = loader.getController();
 		this.controller.setMainApp(this.fxApp);
 		this.controller.setView(elt);
+		this.controller.setModel(this.model);
 	}
 
 
