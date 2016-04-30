@@ -6,8 +6,8 @@ import javafx.scene.paint.Color;
 /**
  * Define an Inversion Filter.
  *
- * @Since	March 9, 2016
- * @Author	Constantin MASSON
+ * @since	March 9, 2016
+ * @author	Constantin MASSON
  */
 public class InversionFilter extends FunctionalFilter{
 	// ************************************************************************

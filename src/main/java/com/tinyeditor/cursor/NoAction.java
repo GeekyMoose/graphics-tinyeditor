@@ -1,7 +1,9 @@
 package com.tinyeditor.cursor;
 
 /**
- * Created by geekymoose on 27/04/16.
+ *
+ * @since   Apr 27, 2016
+ * @author  Constantin MASSON
  */
 public class NoAction implements ClickType{
 	@Override

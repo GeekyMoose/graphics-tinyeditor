@@ -8,8 +8,8 @@ import javafx.scene.paint.Color;
 /**
  * Define a Contrast Filter.
  *
- * @Since	March 9, 2016
- * @Author	Constantin MASSON
+ * @since	March 9, 2016
+ * @author	Constantin MASSON
  */
 public class ContrastFilter extends FunctionalFilter{
 	// ************************************************************************
