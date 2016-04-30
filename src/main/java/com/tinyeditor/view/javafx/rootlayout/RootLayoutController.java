@@ -1,13 +1,12 @@
 package com.tinyeditor.view.javafx.rootlayout;
 
 import com.tinyeditor.modules.file.FileManager;
-
-import java.io.File;
-
-import javafx.fxml.FXML;
 import com.tinyeditor.view.javafx.FxApp;
+import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
+
+import java.io.File;
 
 /**
  *

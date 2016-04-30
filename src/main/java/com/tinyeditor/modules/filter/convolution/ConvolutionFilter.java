@@ -2,7 +2,6 @@ package com.tinyeditor.modules.filter.convolution;
 
 import com.tinyeditor.modules.filter.asset.FilterHelper;
 import com.tinyeditor.modules.filter.asset.ImageFilter;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;

@@ -1,8 +1,7 @@
 package com.tinyeditor.modules.filter.dithering;
 
-import com.tinyeditor.modules.filter.asset.ImageFilter;
 import com.tinyeditor.modules.filter.asset.FilterHelper;
-
+import com.tinyeditor.modules.filter.asset.ImageFilter;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;

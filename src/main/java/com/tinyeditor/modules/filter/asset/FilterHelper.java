@@ -1,8 +1,8 @@
 package com.tinyeditor.modules.filter.asset;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.paint.Color;
-import javafx.scene.image.Image;
 
 
 /**

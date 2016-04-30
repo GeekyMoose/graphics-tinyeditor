@@ -4,8 +4,6 @@ import com.tinyeditor.modules.filter.functional.BrightnessFilter;
 import com.tinyeditor.modules.filter.functional.ContrastFilter;
 import com.tinyeditor.modules.filter.functional.GammaCorrectionFilter;
 import com.tinyeditor.modules.filter.functional.InversionFilter;
-import com.tinyeditor.view.javafx.FxApp;
-import com.tinyeditor.view.javafx.editor.EditorFxController;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -17,10 +15,7 @@ import javafx.scene.control.Slider;
  * @since   Apr 28, 2016
  * @author  Constantin MASSON
  */
-public class GeneralFiltersController {
-	private FxApp               mainApp; //Parent FxApplication
-	private EditorFxController  editor; //Data managed (Through another controller)
-
+public class GeneralFiltersController extends AbsFilterController{
 	// *************************************************************************
 	// Components
 	// *************************************************************************
@@ -49,7 +44,7 @@ public class GeneralFiltersController {
 	// *************************************************************************
 	@FXML
 	private void handleInversionBox(){
-		this.editor.applyFilter(new InversionFilter());
+		this.applyFilter(new InversionFilter());
 	}
 
 	@FXML
@@ -60,7 +55,7 @@ public class GeneralFiltersController {
 		filter.setCoef(value);
 		//Apply filter only if checkbox selected
 		if(this.brightnessCheckBox.isSelected()){
-			this.editor.applyFilter(filter);
+			this.applyFilter(filter);
 		}
 	}
 
@@ -72,7 +67,7 @@ public class GeneralFiltersController {
 		filter.setCoef(value);
 		//Apply filter if checkbox selected
 		if(this.contrastCheckBox.isSelected()){
-			this.editor.applyFilter(filter);
+			this.applyFilter(filter);
 		}
 	}
 
@@ -84,25 +79,7 @@ public class GeneralFiltersController {
 		filter.setCoef(value);
 		//Apply if checkbox selected
 		if(this.gammaCheckBox.isSelected()){
-			this.editor.applyFilter(filter);
+			this.applyFilter(filter);
 		}
-	}
-
-
-	// ************************************************************************
-	// Getters - Setters
-	// ************************************************************************
-	/**
-	 * Set the linked mainApp
-	 * */
-	public void setMainApp(FxApp mainApp){
-		this.mainApp = mainApp;
-	}
-
-	/**
-	 * Set the editor managed by the filters
-	 * */
-	public void setEditor(EditorFxController controller){
-		this.editor = controller;
 	}
 }

@@ -1,7 +1,6 @@
 package com.tinyeditor.modules.filter.functional;
 
 import com.tinyeditor.modules.filter.asset.FilterHelper;
-
 import javafx.scene.image.PixelReader;
 import javafx.scene.paint.Color;
 

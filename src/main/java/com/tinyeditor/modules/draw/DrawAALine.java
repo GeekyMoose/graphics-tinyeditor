@@ -1,8 +1,5 @@
 package com.tinyeditor.modules.draw;
 
-import static java.lang.Math.abs;
-
-
 public class DrawAALine {
 	/*
 	private static int[] p1 = null;

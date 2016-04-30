@@ -1,8 +1,6 @@
 package com.tinyeditor.view.javafx.editor;
 
 import com.tinyeditor.editor.Editor;
-import com.tinyeditor.main.Constants;
-import com.tinyeditor.modules.filter.asset.ImageFilter;
 import com.tinyeditor.view.javafx.FxApp;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -31,19 +29,6 @@ public class EditorFxController {
 		this.imageViewPanel.setImage(newImage); //Update view
 	}
 
-	/**
-	 * Apply a specific filter to the image and update model and display
-	 *
-	 * @param filter filter to apply
-	 */
-	public void applyFilter(ImageFilter filter){
-		Image currentImg = this.model.getImageEditor().getProcessImage();
-		if(currentImg == null){
-			return;
-		}
-		this.updateImage(filter.applyFilter(currentImg));
-	}
-
 
 	// *************************************************************************
 	// Getters - Setters
@@ -59,5 +44,8 @@ public class EditorFxController {
 	}
 	public BorderPane getView(){
 		return this.view;
+	}
+	public Editor getModel(){
+		return this.model;
 	}
 }

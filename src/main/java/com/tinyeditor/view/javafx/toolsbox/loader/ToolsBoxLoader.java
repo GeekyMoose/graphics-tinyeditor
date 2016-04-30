@@ -2,6 +2,9 @@ package com.tinyeditor.view.javafx.toolsbox.loader;
 
 import com.tinyeditor.view.javafx.FxApp;
 import com.tinyeditor.view.javafx.editor.EditorFxController;
+import com.tinyeditor.view.javafx.toolsbox.controllers.ColorFiltersController;
+import com.tinyeditor.view.javafx.toolsbox.controllers.ConvolutionFiltersController;
+import com.tinyeditor.view.javafx.toolsbox.controllers.DitheringFiltersController;
 import com.tinyeditor.view.javafx.toolsbox.controllers.GeneralFiltersController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Accordion;
@@ -91,18 +94,33 @@ public class ToolsBoxLoader {
 	private TitledPane loadConvolutionFilters() throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(this.getClass().getResource(PATH+"/convolutionFilters.fxml"));
-		return loader.load();
+		TitledPane elt = loader.load();
+		//Init Controller
+		ConvolutionFiltersController c = loader.getController();
+		c.setMainApp(this.fxApp);
+		c.setEditor(this.editor);
+		return elt;
 	}
 
 	private TitledPane loadDitheringFilters() throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(this.getClass().getResource(PATH + "/ditheringFilters.fxml"));
-		return loader.load();
+		TitledPane elt = loader.load();
+		//Init Controller
+		DitheringFiltersController c = loader.getController();
+		c.setMainApp(this.fxApp);
+		c.setEditor(this.editor);
+		return elt;
 	}
 
 	private TitledPane loadColorFilters() throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(this.getClass().getResource(PATH + "/colorFilters.fxml"));
-		return loader.load();
+		TitledPane elt = loader.load();
+		//Init Controller
+		ColorFiltersController c = loader.getController();
+		c.setMainApp(this.fxApp);
+		c.setEditor(this.editor);
+		return elt;
 	}
 }

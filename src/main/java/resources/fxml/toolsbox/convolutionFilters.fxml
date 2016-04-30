@@ -27,11 +27,11 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <CheckBox mnemonicParsing="false" />
-                  <CheckBox mnemonicParsing="false" GridPane.rowIndex="1" />
-                  <CheckBox mnemonicParsing="false" GridPane.rowIndex="2" />
-                  <CheckBox mnemonicParsing="false" GridPane.rowIndex="3" />
-                  <CheckBox mnemonicParsing="false" GridPane.rowIndex="4" />
+                  <CheckBox mnemonicParsing="false" onMouseReleased="#handleBlurFilterBoxClick" />
+                  <CheckBox mnemonicParsing="false" onMouseReleased="#handleGaussianFilterBoxClick" GridPane.rowIndex="1" />
+                  <CheckBox mnemonicParsing="false" onMouseReleased="#handleSharpenFilterBoxClick" GridPane.rowIndex="2" />
+                  <CheckBox mnemonicParsing="false" onMouseReleased="#handleEdgeDetectionFilterBoxClick" GridPane.rowIndex="3" />
+                  <CheckBox mnemonicParsing="false" onMouseReleased="#handleEmbossFilterBoxClick" GridPane.rowIndex="4" />
                   <Label text="Blur" GridPane.columnIndex="1" />
                   <Label text="Gaussian Smoothing" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="Sharpen" GridPane.columnIndex="1" GridPane.rowIndex="2" />

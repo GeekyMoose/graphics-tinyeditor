@@ -28,15 +28,15 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <CheckBox mnemonicParsing="false" />
-                  <Slider fx:id="averageDitheringSlider" blockIncrement="2.0" majorTickUnit="2.0" max="10.0" min="2.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <CheckBox mnemonicParsing="false" GridPane.rowIndex="2" />
-                  <Slider fx:id="orderedDitheringSliderK" blockIncrement="2.0" majorTickUnit="2.0" max="10.0" min="2.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <Slider fx:id="orderedDitheringSliderN" blockIncrement="1.0" majorTickUnit="1.0" max="4.0" min="2.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <CheckBox fx:id="averageCheckBox" mnemonicParsing="false" />
+                  <Slider fx:id="averageDitheringSlider" blockIncrement="2.0" majorTickUnit="2.0" max="10.0" min="2.0" minorTickCount="0" onKeyReleased="#handleAverageFilter" onMouseReleased="#handleAverageFilter" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <CheckBox fx:id="orderedCheckBox" mnemonicParsing="false" GridPane.rowIndex="2" />
+                  <Slider fx:id="orderedDitheringSliderK" blockIncrement="2.0" majorTickUnit="2.0" max="10.0" min="2.0" minorTickCount="0" onKeyReleased="#handleOrderedDitheringFilter" onMouseReleased="#handleOrderedDitheringFilter" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Slider fx:id="orderedDitheringSliderN" blockIncrement="1.0" majorTickUnit="1.0" max="4.0" min="2.0" minorTickCount="0" onKeyReleased="#handleOrderedDitheringFilter" onMouseReleased="#handleOrderedDitheringFilter" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Label text="K" GridPane.rowIndex="3" />
                   <Label text="N" GridPane.rowIndex="4" />
-                  <CheckBox mnemonicParsing="false" GridPane.rowIndex="5" />
-                  <Slider fx:id="errorDiffusionSlider" blockIncrement="2.0" majorTickUnit="2.0" max="10.0" min="2.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                  <CheckBox fx:id="errorCheckBox" mnemonicParsing="false" GridPane.rowIndex="5" />
+                  <Slider fx:id="errorDiffusionSlider" blockIncrement="2.0" majorTickUnit="2.0" max="10.0" min="2.0" minorTickCount="0" onKeyReleased="#handleErrorDiffusionFilter" onMouseReleased="#handleErrorDiffusionFilter" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="2.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                   <Label text="Average" GridPane.columnIndex="1" />
                   <Label text="Ordered Dithering" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Error Diffusion" GridPane.columnIndex="1" GridPane.rowIndex="5" />
