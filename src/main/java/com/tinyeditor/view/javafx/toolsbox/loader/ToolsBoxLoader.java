@@ -2,13 +2,13 @@ package com.tinyeditor.view.javafx.toolsbox.loader;
 
 import com.tinyeditor.view.javafx.FxApp;
 import com.tinyeditor.view.javafx.editor.EditorFxController;
-import com.tinyeditor.view.javafx.toolsbox.controllers.ColorFiltersController;
-import com.tinyeditor.view.javafx.toolsbox.controllers.ConvolutionFiltersController;
-import com.tinyeditor.view.javafx.toolsbox.controllers.DitheringFiltersController;
-import com.tinyeditor.view.javafx.toolsbox.controllers.GeneralFiltersController;
+import com.tinyeditor.view.javafx.toolsbox.controllers.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Accordion;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
@@ -40,7 +40,7 @@ public class ToolsBoxLoader {
 	 * @return              ToolsBox FX Component
 	 * @throws IOException  if unable to load all ToolsBox components
 	 */
-	public static Accordion load(FxApp app, EditorFxController c) throws IOException {
+	public static TabPane load(FxApp app, EditorFxController c) throws IOException {
 		ToolsBoxLoader tbl = new ToolsBoxLoader(app, c);
 		return tbl.loadToolsBox();
 	}
@@ -70,19 +70,37 @@ public class ToolsBoxLoader {
 	 * @return              The ToolsBox view.
 	 * @throws IOException  if unable to load.
 	 */
-	private Accordion loadToolsBox() throws IOException {
+	private TabPane loadToolsBox() throws IOException {
+		TabPane tabPane = new TabPane();
+
+		//Create the Filters Tab
 		Accordion accordion = new Accordion();
 		//Load and add each filters...
 		accordion.getPanes().add(this.loadGeneralFilters());
 		accordion.getPanes().add(this.loadConvolutionFilters());
 		accordion.getPanes().add(this.loadDitheringFilters());
 		accordion.getPanes().add(this.loadColorFilters());
-		return accordion;
+		//Create the tabPane tab and place it in the tabPane
+		Tab filterTab = new Tab();
+		filterTab.setText("Filters");
+		filterTab.setContent(accordion);
+		filterTab.setClosable(false);
+		filterTab.setDisable(false);
+		tabPane.getTabs().add(filterTab);
+
+		//Create the Draw Tab
+		Tab drawTab = new Tab();
+		drawTab.setClosable(false);
+		drawTab.setDisable(false);
+		drawTab.setText("Draw");
+		drawTab.setContent(this.loadDrawComponent());
+		tabPane.getTabs().add(drawTab);
+		return tabPane;
 	}
 
 
 	// *************************************************************************
-	// Content Loaders
+	// Content Loaders (Filters)
 	// *************************************************************************
 	private TitledPane loadGeneralFilters() throws IOException {
 		FXMLLoader loader = new FXMLLoader();
@@ -123,6 +141,21 @@ public class ToolsBoxLoader {
 		TitledPane elt = loader.load();
 		//Init Controller
 		ColorFiltersController c = loader.getController();
+		c.setMainApp(this.fxApp);
+		c.setEditor(this.editor);
+		return elt;
+	}
+
+
+	// *************************************************************************
+	// Content Loaders (Draw)
+	// *************************************************************************
+	private AnchorPane loadDrawComponent() throws IOException{
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(this.getClass().getResource(PATH+"/draw.fxml"));
+		AnchorPane elt = loader.load();
+		//Init Controller
+		DrawController c = loader.getController();
 		c.setMainApp(this.fxApp);
 		c.setEditor(this.editor);
 		return elt;

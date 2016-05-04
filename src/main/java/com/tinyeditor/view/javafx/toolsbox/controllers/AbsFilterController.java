@@ -45,7 +45,7 @@ public abstract class AbsFilterController {
 	 * Set the linked mainApp.
 	 * Application is the main FX component running the program.
 	 *
-	 * @param mainApp   Parent application to link with this controller
+	 * @param mainApp Parent application to link with this controller
 	 */
 	public void setMainApp(FxApp mainApp){
 		this.mainApp = mainApp;

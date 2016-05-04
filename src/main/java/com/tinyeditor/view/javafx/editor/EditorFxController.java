@@ -56,4 +56,7 @@ public class EditorFxController {
 	public Editor getModel(){
 		return this.model;
 	}
+	public ImageView getImageViewPanel(){
+		return this.imageViewPanel;
+	}
 }
