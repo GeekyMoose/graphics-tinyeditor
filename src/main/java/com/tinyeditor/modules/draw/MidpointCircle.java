@@ -56,15 +56,32 @@ public class MidpointCircle {
 			}
 
 			//Apply to the eight other octant. (Mirror)
-			pw.setColor(x0 + x, y0 + y, color);
-			pw.setColor(x0 - x, y0 + y, color);
-			pw.setColor(x0 + x, y0 - y, color);
-			pw.setColor(x0 - x, y0 - y, color);
-			pw.setColor(x0 + y, y0 + x, color);
-			pw.setColor(x0 - y, y0 + x, color);
-			pw.setColor(x0 + y, y0 - x, color);
-			pw.setColor(x0 - y, y0 - x, color);
+			newPixelColor(pw, x0 + x, y0 + y, color);
+			newPixelColor(pw, x0 - x, y0 + y, color);
+			newPixelColor(pw, x0 + x, y0 - y, color);
+			newPixelColor(pw, x0 - x, y0 - y, color);
+			newPixelColor(pw, x0 + y, y0 + x, color);
+			newPixelColor(pw, x0 - y, y0 + x, color);
+			newPixelColor(pw, x0 + y, y0 - x, color);
+			newPixelColor(pw, x0 - y, y0 - x, color);
 
 		} while (x < y);
+	}
+
+	/*
+	 * Set the new color for pixel.
+	 * If coordinate is not in the image, do nothing.
+	 */
+	private static void newPixelColor(PixelWriter pw, int x, int y, Color color){
+		// DEV NOTE:
+		// This strategy (Using exception) is, I think, a bit ugly
+		// A strategy using a test if coordinate is in image could be better
+		// But might require more parameters.
+		// Atm, I choose to keep using this 'exception' strategy.
+		try{
+			pw.setColor(x, y, color);
+		} catch (IndexOutOfBoundsException ex){
+			//Here, that just means this coordinate is not in the image.
+		}
 	}
 }
