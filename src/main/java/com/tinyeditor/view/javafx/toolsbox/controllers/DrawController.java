@@ -1,12 +1,18 @@
 package com.tinyeditor.view.javafx.toolsbox.controllers;
 
+import com.tinyeditor.modules.draw.GuptaSproull;
+import com.tinyeditor.modules.draw.MidpointCircle;
+import com.tinyeditor.modules.draw.MidpointLine;
 import com.tinyeditor.view.javafx.FxApp;
 import com.tinyeditor.view.javafx.editor.EditorFxController;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.RadioButton;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+
+import java.awt.geom.Point2D;
 
 /**
  * Controller for the Draw Module in ToolsBox
@@ -17,8 +23,10 @@ import javafx.scene.input.MouseEvent;
 public class DrawController{
 	private FxApp               mainApp;
 	private EditorFxController  editor;
-	private DrawPoint           startPoint;
-	private DrawPoint           endPoint;
+	private int                 x1; //Start point
+	private int                 y1;
+	private int                 x2; //End point
+	private int                 y2;
 	private boolean             isFirstClick; //True when draw the startPoint
 
 	@FXML
@@ -36,9 +44,7 @@ public class DrawController{
 	// ************************************************************************
 	@FXML
 	private void initialize(){
-		this.startPoint     = new DrawPoint();
-		this.endPoint       = new DrawPoint();
-		this.isFirstClick   = true;
+		this.isFirstClick = true;
 	}
 
 
@@ -50,15 +56,18 @@ public class DrawController{
 	 * Start drawing according to the selected button
 	 */
 	private void handlerDraw(){
+		Image image = this.editor.getModel().getImageEditor().getProcessImage();
 		if(this.midPointLineBtn.isSelected()){
-			System.out.println("Draw Line");
+			image = MidpointLine.draw(image, x1, y1, x2, y2, colorPicker.getValue());
 		}
 		else if(this.midPointCercleBtn.isSelected()){
-			System.out.println("Draw Circle");
+			int radius = (int) Point2D.distance(x1, y1, x2, y2);
+			image = MidpointCircle.draw(image, x1, y1, radius, colorPicker.getValue());
 		}
 		else if(this.guptaSproullLineBtn.isSelected()){
-			System.out.println("Draw Line AA");
+			image = GuptaSproull.draw(image, x1, y1, x2, y2, colorPicker.getValue());
 		}
+		this.editor.updateImage(image);
 	}
 
 
@@ -70,22 +79,17 @@ public class DrawController{
 		public void handle(MouseEvent event) {
 			//If first click, set startPoint, otherwise, set endPoint and Draw element.
 			if(DrawController.this.isFirstClick){
-				DrawController.this.startPoint.x = (int)event.getX();
-				DrawController.this.startPoint.y = (int)event.getY();
+				DrawController.this.x1 = (int)event.getX();
+				DrawController.this.y1 = (int)event.getY();
 				DrawController.this.isFirstClick = false;
 			}
 			else{
-				DrawController.this.endPoint.x = (int)event.getX();
-				DrawController.this.endPoint.y = (int)event.getY();
+				DrawController.this.x2 = (int)event.getX();
+				DrawController.this.y2 = (int)event.getY();
 				DrawController.this.isFirstClick = true;
 				DrawController.this.handlerDraw();
 			}
 		}
-	}
-
-	private class DrawPoint{
-		private int x = 0;
-		private int y = 0;
 	}
 
 

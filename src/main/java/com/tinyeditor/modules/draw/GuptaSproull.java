@@ -1,6 +1,41 @@
 package com.tinyeditor.modules.draw;
 
-public class DrawAALine {
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
+
+/**
+ * Draw a line using Gupta-Sproul Algorithm (Anti-aliasing).
+ *
+ * @since   Apr 27, 2016
+ * @author  Constantin MASSON
+ */
+public class GuptaSproull {
+
+	public static WritableImage draw(Image image, int x1, int y1, int x2, int y2, Color color){
+		int height  = (int) image.getHeight();
+		int width   = (int) image.getWidth();
+		//Set the pixel reader and writer
+		PixelReader     pixelReader = image.getPixelReader();
+		WritableImage   wimage      = new WritableImage(width, height);
+		PixelWriter     pixelWriter = wimage.getPixelWriter();
+
+		//Copy the image in the new Writable Image before drawing (Otherwise, loose it)
+		for (int j = 0; j < height; j++) {
+			for (int i = 0; i < width; i++) {
+				pixelWriter.setColor(i, j, pixelReader.getColor(i, j));
+			}
+		}
+
+		//Draw the circle
+		GuptaSproull.applyFilter(pixelWriter, x1, y1, x2, y2, color);
+		return wimage;
+	}
+
+	public static void applyFilter(PixelWriter pw, int x1, int y1, int x2, int y2, Color color){
+	}
 	/*
 	private static int[] p1 = null;
 	private static int[] p2 = null;
@@ -21,16 +56,16 @@ public class DrawAALine {
 		}
 
 		//Process draw
-		if (DrawAALine.p1 == null){
-			DrawAALine.p1 = new int[2];
-			DrawAALine.p1[0] = x;
-			DrawAALine.p1[1] = y;
+		if (GuptaSproull.p1 == null){
+			GuptaSproull.p1 = new int[2];
+			GuptaSproull.p1[0] = x;
+			GuptaSproull.p1[1] = y;
 			return wimage;
 		}
-		DrawAALine.p2 = new int[2];
-		DrawAALine.p2[0] = x;
-		DrawAALine.p2[1] = y;
-		DrawAALine.aaLine(pixelWriter, p1[0], p1[1], p2[0], p2[1]);
+		GuptaSproull.p2 = new int[2];
+		GuptaSproull.p2[0] = x;
+		GuptaSproull.p2[1] = y;
+		GuptaSproull.aaLine(pixelWriter, p1[0], p1[1], p2[0], p2[1]);
 		p1 = null;
 		p2 = null;
 		return wimage;
