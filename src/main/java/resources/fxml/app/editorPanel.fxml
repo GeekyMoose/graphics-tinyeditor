@@ -2,8 +2,9 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+
 <BorderPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.71" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tinyeditor.view.javafx.editor.EditorFxController">
    <center>
-      <ImageView fx:id="imageViewPanel" fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+      <ImageView fx:id="imageViewPanel" fitHeight="512.0" fitWidth="512.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

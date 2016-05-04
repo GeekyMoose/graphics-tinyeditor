@@ -7,6 +7,7 @@ import com.tinyeditor.view.javafx.FxApp;
 import com.tinyeditor.view.javafx.editor.EditorFxController;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
@@ -77,6 +78,24 @@ public class DrawController{
 	private class MouseReleasedEvent implements EventHandler<MouseEvent>{
 		@Override
 		public void handle(MouseEvent event) {
+			//@TODO Manage the change of image ratio
+			/*
+			 * Currently, the mouse click doesn't work with image displayed in
+			 * the ViewImage with a different size than its real.
+			 * This is due to the mouseEvent that return the position in the Panel
+			 * (Instead of image pixel.).
+			 * A function must be added to translate the mouse pos to pixel coordinate.
+			 */
+			Image img = editor.getImageViewPanel().getImage();
+			if(editor.getImageViewPanel().getFitWidth() != img.getWidth()
+					|| editor.getImageViewPanel().getFitHeight() != img.getHeight())
+			{
+				Alert alert = new Alert(Alert.AlertType.INFORMATION);
+				alert.setTitle("Warning");
+				alert.setHeaderText("Operation under development.");
+				alert.setContentText("Works only for image not resized in the viewport.");
+				alert.showAndWait();
+			}
 			//If first click, set startPoint, otherwise, set endPoint and Draw element.
 			if(DrawController.this.isFirstClick){
 				DrawController.this.x1 = (int)event.getX();
