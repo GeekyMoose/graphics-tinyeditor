@@ -55,6 +55,7 @@ public class MidpointCircle {
 				dp = dp + 2 * (++x) - 2 * (--y) + 5;
 			}
 
+			//Apply to the eight other octant. (Mirror)
 			pw.setColor(x0 + x, y0 + y, color);
 			pw.setColor(x0 - x, y0 + y, color);
 			pw.setColor(x0 + x, y0 - y, color);
