@@ -30,15 +30,8 @@ public class MidpointLine {
 		int width	= (int)image.getWidth();
 		//Set the pixel reader and writer
 		PixelReader     pixelReader = image.getPixelReader();
-		WritableImage   wimage      = new WritableImage(width, height);
+		WritableImage   wimage      = new WritableImage(pixelReader, width, height);
 		PixelWriter     pixelWriter = wimage.getPixelWriter();
-
-		//Copy the image in the new Writable Image before drawing (Otherwise, loose it)
-		for(int j=0; j<height; j++){
-			for(int i=0; i<width; i++){
-				pixelWriter.setColor(i,j,pixelReader.getColor(i,j));
-			}
-		}
 
 		//Draw on the image and return it.
 		MidpointLine.applyAlgo(pixelWriter, x1, y1, x2, y2, color);
