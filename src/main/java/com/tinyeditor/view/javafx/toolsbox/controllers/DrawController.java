@@ -6,16 +6,17 @@ import com.tinyeditor.modules.draw.MidpointLine;
 import com.tinyeditor.modules.filling.FloodFill;
 import com.tinyeditor.view.javafx.FxApp;
 import com.tinyeditor.view.javafx.editor.EditorFxController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import javafx.scene.input.MouseEvent;
 
 import java.awt.geom.Point2D;
+import java.util.LinkedList;
 
 /**
  * Controller for the Draw Module in ToolsBox
@@ -24,13 +25,10 @@ import java.awt.geom.Point2D;
  * @author  Constantin MASSON
  */
 public class DrawController{
-	private FxApp               mainApp;
-	private EditorFxController  editor;
-	private int                 x1; //Start point
-	private int                 y1;
-	private int                 x2; //End point
-	private int                 y2;
-	private boolean             isFirstClick; //True when draw the startPoint
+	private FxApp                   mainApp;
+	private EditorFxController      editor;
+	private LinkedList<BuffPoint>   listTmpPoints;
+	private boolean                 isFirstClick; //True when draw the startPoint
 
 	@FXML
 	private ColorPicker colorPicker;
@@ -52,6 +50,7 @@ public class DrawController{
 	@FXML
 	private void initialize(){
 		this.isFirstClick = true;
+		this.listTmpPoints = new LinkedList<>();
 	}
 
 
@@ -60,27 +59,48 @@ public class DrawController{
 	// ************************************************************************
 
 	/**
-	 * Start drawing according to the selected button
+	 * Start drawing according to the selected button.
 	 */
 	private void handlerDraw(){
 		Image image = this.editor.getModel().getImageEditor().getProcessImage();
 		if(this.midPointLineBtn.isSelected()){
-			image = MidpointLine.draw(image, x1, y1, x2, y2, colorPicker.getValue());
+			//Exactly 2 points must have been set.
+			if(this.listTmpPoints.size() != 2){
+				return;
+			}
+			BuffPoint p1 = this.listTmpPoints.remove();
+			BuffPoint p2 = this.listTmpPoints.remove();
+			image = MidpointLine.draw(image, p1.x, p1.y, p2.x, p2.y, colorPicker.getValue());
+			//Now, list should be empty (We removed the 2 elements)
 		}
 		else if(this.midPointCercleBtn.isSelected()){
-			int radius = (int) Point2D.distance(x1, y1, x2, y2);
-			image = MidpointCircle.draw(image, x1, y1, radius, colorPicker.getValue());
+			//Exactly 2 points must have been set.
+			if(this.listTmpPoints.size() != 2){
+				return;
+			}
+			BuffPoint p1 = this.listTmpPoints.remove();
+			BuffPoint p2 = this.listTmpPoints.remove();
+			int radius = (int) Point2D.distance(p1.x, p1.y, p2.x, p2.y);
+			image = MidpointCircle.draw(image, p1.x, p1.y, radius, colorPicker.getValue());
 		}
 		else if(this.guptaSproullLineBtn.isSelected()){
-			image = GuptaSproull.draw(image, x1, y1, x2, y2, colorPicker.getValue());
+			//Exactly 2 points must have been set.
+			if(this.listTmpPoints.size() != 2){
+				return;
+			}
+			BuffPoint p1 = this.listTmpPoints.remove();
+			BuffPoint p2 = this.listTmpPoints.remove();
+			image = GuptaSproull.draw(image, p1.x, p1.y, p2.x, p2.y, colorPicker.getValue());
 		}
 		else if(this.floodFill4AlgoBtn.isSelected()){
+			BuffPoint p1 = this.listTmpPoints.remove();
 			PixelReader pr = image.getPixelReader();
-			image = FloodFill.floodFill4(image, x2, y2, pr.getColor(x2,y2), colorPicker.getValue());
+			image = FloodFill.floodFill4(image, p1.x, p1.y, pr.getColor(p1.x,p1.y), colorPicker.getValue());
 		}
 		else if(this.floodFill8AlgoBtn.isSelected()){
+			BuffPoint p1 = this.listTmpPoints.remove();
 			PixelReader pr = image.getPixelReader();
-			image = FloodFill.floodFill8(image, x2, y2, pr.getColor(x2,y2), colorPicker.getValue());
+			image = FloodFill.floodFill8(image, p1.x, p1.y, pr.getColor(p1.x,p1.y), colorPicker.getValue());
 		}
 		this.editor.updateImage(image);
 	}
@@ -89,6 +109,10 @@ public class DrawController{
 	// ************************************************************************
 	// Handler Nested Classes
 	// ************************************************************************
+
+	/**
+	 * Manage a Release click event.
+	 */
 	private class MouseReleasedEvent implements EventHandler<MouseEvent>{
 		@Override
 		public void handle(MouseEvent event) {
@@ -109,26 +133,36 @@ public class DrawController{
 				alert.setHeaderText("Operation under development.");
 				alert.setContentText("Works only for image not resized in the viewport.");
 				alert.showAndWait();
+				return;
 			}
-			//If first click, set startPoint, otherwise, set endPoint and Draw element.
-			if(DrawController.this.isFirstClick){
-				DrawController.this.x1 = (int)event.getX();
-				DrawController.this.y1 = (int)event.getY();
-				DrawController.this.isFirstClick = false;
-			}
-			else{
-				DrawController.this.x2 = (int)event.getX();
-				DrawController.this.y2 = (int)event.getY();
-				DrawController.this.isFirstClick = true;
-				DrawController.this.handlerDraw();
-			}
+
+			//Create the point and place it in list of tmp points.
+			BuffPoint p = new BuffPoint();
+			p.x = (int)event.getX();
+			p.y = (int)event.getY();
+			DrawController.this.listTmpPoints.add(p);
+
+			//Call the draw function
+			DrawController.this.handlerDraw();
+		}
+	}
+
+	/**
+	 * Manage the action to do when a new radio button is selected.
+	 * Clear the list of temporary points.
+	 */
+	private class BtnChangeListener implements ChangeListener<Toggle>{
+		@Override
+		public void changed(ObservableValue<? extends Toggle> ob, Toggle oldT, Toggle newT) {
+			//Clear the list of points
+			DrawController.this.listTmpPoints.clear();
 		}
 	}
 
 
-	// ************************************************************************
+	// *************************************************************************
 	// Getters - Setters
-	// ************************************************************************
+	// *************************************************************************
 	/**
 	 * Set the linked mainApp.
 	 * Application is the main FX component running the program.
@@ -152,5 +186,33 @@ public class DrawController{
 				MouseEvent.MOUSE_RELEASED,
 				new MouseReleasedEvent()
 		);
+
+		//Recover the toggle group and add a change listener.
+		ToggleGroup group = this.midPointLineBtn.getToggleGroup();
+		group.selectedToggleProperty().addListener(new BtnChangeListener());
+	}
+
+
+
+
+	// *************************************************************************
+	// Getters - Setters
+	// *************************************************************************
+
+	/**
+	 * A really simple point representation for this controller.
+	 */
+	private class BuffPoint{
+		public int x;
+		public int y;
+
+		private BuffPoint(){
+			this.x = 0;
+			this.y = 0;
+		}
+		private BuffPoint(int x, int y){
+			this.x = x;
+			this.y = y;
+		}
 	}
 }
