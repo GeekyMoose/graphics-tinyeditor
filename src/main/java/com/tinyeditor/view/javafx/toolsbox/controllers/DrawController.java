@@ -3,6 +3,7 @@ package com.tinyeditor.view.javafx.toolsbox.controllers;
 import com.tinyeditor.modules.draw.GuptaSproull;
 import com.tinyeditor.modules.draw.MidpointCircle;
 import com.tinyeditor.modules.draw.MidpointLine;
+import com.tinyeditor.modules.filling.FloodFill;
 import com.tinyeditor.view.javafx.FxApp;
 import com.tinyeditor.view.javafx.editor.EditorFxController;
 import javafx.event.EventHandler;
@@ -11,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
 import javafx.scene.input.MouseEvent;
 
 import java.awt.geom.Point2D;
@@ -38,6 +40,10 @@ public class DrawController{
 	private RadioButton midPointCercleBtn;
 	@FXML
 	private RadioButton guptaSproullLineBtn;
+	@FXML
+	private RadioButton floodFill4AlgoBtn;
+	@FXML
+	private RadioButton floodFill8AlgoBtn;
 
 
 	// ************************************************************************
@@ -67,6 +73,14 @@ public class DrawController{
 		}
 		else if(this.guptaSproullLineBtn.isSelected()){
 			image = GuptaSproull.draw(image, x1, y1, x2, y2, colorPicker.getValue());
+		}
+		else if(this.floodFill4AlgoBtn.isSelected()){
+			PixelReader pr = image.getPixelReader();
+			image = FloodFill.floodFill4(image, x2, y2, pr.getColor(x2,y2), colorPicker.getValue());
+		}
+		else if(this.floodFill8AlgoBtn.isSelected()){
+			PixelReader pr = image.getPixelReader();
+			image = FloodFill.floodFill8(image, x2, y2, pr.getColor(x2,y2), colorPicker.getValue());
 		}
 		this.editor.updateImage(image);
 	}

@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="241.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/8.0.71" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tinyeditor.view.javafx.toolsbox.controllers.DrawController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="325.0" xmlns="http://javafx.com/javafx/8.0.71" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tinyeditor.view.javafx.toolsbox.controllers.DrawController">
    <children>
       <GridPane layoutX="14.0" layoutY="162.0" prefHeight="350.0" prefWidth="325.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -21,6 +28,10 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -32,16 +43,22 @@
             <Label text="MidPoint Line Algorithm" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label text="MidPoint Cercle Algorithm" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Label text="Gupta-Sproull Algorithm" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <RadioButton fx:id="midPointCercleBtn" mnemonicParsing="false" text="RadioButton" toggleGroup="$drawRadioBtn" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <RadioButton fx:id="guptaSproullLineBtn" mnemonicParsing="false" text="RadioButton" toggleGroup="$drawRadioBtn" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <RadioButton fx:id="midPointCercleBtn" mnemonicParsing="false" text="Draw Circle" toggleGroup="$drawRadioBtn" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <RadioButton fx:id="guptaSproullLineBtn" mnemonicParsing="false" text="Draw Line" toggleGroup="$drawRadioBtn" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="Simple" GridPane.columnIndex="1" />
             <Label text="Anti-Aliasing" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label text="Options" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <ColorPicker fx:id="colorPicker" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-            <Label text="Color" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label text="Options" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <ColorPicker fx:id="colorPicker" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+            <Label text="Color" GridPane.columnIndex="1" GridPane.rowIndex="11" />
             <Separator prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <Separator prefWidth="200.0" GridPane.columnIndex="2" />
+            <Separator prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="10" />
             <Separator prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <Label text="Filling" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <RadioButton fx:id="floodFill4AlgoBtn" mnemonicParsing="false" text="Flood Fill" toggleGroup="$drawRadioBtn" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label text="4 connections" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <Label text="8 connections" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+            <RadioButton fx:id="floodFill8AlgoBtn" mnemonicParsing="false" text="Flood Fill" toggleGroup="$drawRadioBtn" GridPane.columnIndex="1" GridPane.rowIndex="8" />
          </children>
       </GridPane>
    </children>
