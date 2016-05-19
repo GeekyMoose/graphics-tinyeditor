@@ -1,6 +1,13 @@
 package com.tinyeditor.modules.filling;
 
 
+import javafx.scene.image.Image;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
+
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -15,34 +22,124 @@ import java.util.LinkedList;
  * @author  Constantin MASSON
  */
 public class ScanlineFill {
+	// *************************************************************************
+	// Attributes
+	// *************************************************************************
 	private int     nbEdges;
 	private int[]   xPos; //X position of each polygon vertices
 	private int[]   yPos; //Y position of each polygon vertices
 
 	private LinkedList<RowAET> globalEdgeTable;
+	private int startAET; //Index of the first element in Active Edge Table (Included)
+	private int lastAET; //Index of the last element currently in AET (Excluded)
 
 
+	// *************************************************************************
+	// Initialization - Constructors
+	// *************************************************************************
 	public ScanlineFill(int[] x, int[] y){
 		this.nbEdges = x.length;
 		this.xPos = x;
 		this.yPos = y;
+		this.startAET = this.lastAET = 0;
 		this.initGlobalEdgeTable();
 	}
 
+	/**
+	 * Initialize the Global Edge Table.
+	 * All edge are added (Except horizontal one). Then, list is sorted.
+	 */
 	private void initGlobalEdgeTable(){
 		this.globalEdgeTable = new LinkedList<>(); //Create the list of edge
 		//Create RowAET for each edge.
-		// %nbEdge cuz last edge use last Point and first Point.
+		// modulo %nbEdge cuz last edge use last Point and first Point.
 		for(int k=0; k<(nbEdges); k++){
 			RowAET tmp = new RowAET(xPos[k], yPos[k], xPos[(k+1)%nbEdges], yPos[(k+1)%nbEdges]);
-			// Do not add in table id 1/m is infinite.
+			// Do not add in table id 1/m is infinite. (Horizontal)
 			if(tmp.rSlope != tmp.INFINITE){
 				this.globalEdgeTable.add(tmp);
 			}
 		}
 		//Sort the edge
 		Collections.sort(this.globalEdgeTable);
+
+		//@TODO DEBUG - TO DELETE LATER
+		System.out.println("DEBUG::::AFTER");
+		for(RowAET ro : this.globalEdgeTable){
+			System.out.println(ro.toString());
+		}
 	}
+
+
+	// *************************************************************************
+	// Functions
+	// *************************************************************************
+	/**
+	 * Draw the filled polygon.
+	 *
+	 * @param image Image where to draw.
+	 * @param color Color to fill with.
+	 * @return      The new image.
+	 */
+	public WritableImage draw(Image image, Color color){
+		int height  = (int) image.getHeight();
+		int width   = (int) image.getWidth();
+		//Set the pixel reader and writer
+		PixelReader     pixelReader = image.getPixelReader();
+		WritableImage   wimage      = new WritableImage(pixelReader, width, height);
+		PixelWriter     pixelWriter = wimage.getPixelWriter();
+
+		//Recover the min and max value from the polygon vertices.
+		int minY = Arrays.stream(yPos).min().getAsInt();
+		int maxY = Arrays.stream(yPos).max().getAsInt();
+		this.startAET = this.lastAET = 0; //Init value for active AET
+
+		//Draw pixel from odd value edge to even.
+		for(int yLine = minY; yLine< maxY; yLine++){
+			this.updateAET(yLine);
+			int nbActiveEdges = this.lastAET - this.startAET;
+			for(int k=0; k<nbActiveEdges; k=k+2){
+				int xstart = this.globalEdgeTable.get(this.startAET+k).xval;
+				int xstop = this.globalEdgeTable.get(this.startAET+k+1).xval;
+				for(int posX=xstart; posX<xstop; posX++){
+					pixelWriter.setColor(posX, yLine, color);
+				}
+			}
+		}
+		return wimage;
+	}
+
+	/**
+	 * Update the AET for the new position y.
+	 *
+	 * @param y New position to use.
+	 */
+	private void updateAET(int y){
+		//Get the first row where ymin is equals to current y
+		for(int k = this.startAET; k<this.globalEdgeTable.size(); k++){
+			if(this.globalEdgeTable.get(k).ymin == y){
+				this.startAET = k;
+				break;
+			}
+		}
+
+		//Get the first row where ymin is greater than current y
+		for(int k = this.lastAET; k<this.globalEdgeTable.size(); k++){
+			if(this.globalEdgeTable.get(k).ymin <= y){
+				continue;
+			}
+			this.lastAET = k;
+			break;
+		}
+
+
+		//Update the x position for all element in active table
+		for(int k = this.startAET; k<this.lastAET; k++){
+			RowAET tmp = this.globalEdgeTable.get(k);
+			this.globalEdgeTable.get(k).xval = (int)(tmp.xval + tmp.rSlope);
+		}
+	}
+
 
 
 	// -------------------------------------------------------------------------
@@ -53,7 +150,7 @@ public class ScanlineFill {
 		// Attributes (Package local scope)
 		// *********************************************************************
 		//Asset constants
-		int      INFINITE    = -42;
+		int      INFINITE    = -42; //Horizontal edge
 
 		int      ymax; //Max y value between 2 vertices
 		int      ymin; //Min y value between 2 vertices
@@ -98,15 +195,15 @@ public class ScanlineFill {
 
 			//Calculate the rSlope value
 			if(dy == 0){
-				this.rSlope = INFINITE;
+				this.rSlope = INFINITE; //Horizontal edge
 				return;
 			}
 			this.rSlope = (double)dx/dy; //Cuz 1/m and m = dy/dx
 		}
 
 		@Override
-		// -1 inf, 0 equals, +1 sup
 		/*
+		 * -1 inf, 0 equals, +1 sup
 		 * This function check whether an edge is greater than another.
 		 * This is used to create the Global Edge Table.
 		 *
@@ -120,12 +217,8 @@ public class ScanlineFill {
 			}
 			//If slope = 0 (rSlope INFINITE), always the lower.
 			if(this.rSlope == INFINITE){ return -1; }
-			if(this.ymin > o.ymin){
-				return 1;
-			}
-			if(this.ymin < o.ymin){
-				return -1;
-			}
+			if(this.ymin > o.ymin){ return 1; }
+			if(this.ymin < o.ymin){ return -1; }
 			//Here, means ymin are equals, we check x value then
 			return (this.xval > o.xval) ? 1 : -1;
 		}

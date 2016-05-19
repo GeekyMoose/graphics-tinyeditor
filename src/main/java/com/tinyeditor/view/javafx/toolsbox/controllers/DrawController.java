@@ -117,6 +117,7 @@ public class DrawController{
 				listy[k] = listTmpPoints.get(k).y;
 			}
 			ScanlineFill sf = new ScanlineFill(listx, listy);
+			image = sf.draw(image, colorPicker.getValue());
 		}
 		this.editor.updateImage(image);
 	}
