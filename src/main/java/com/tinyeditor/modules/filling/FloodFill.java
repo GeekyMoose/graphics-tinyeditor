@@ -11,6 +11,9 @@ import java.util.LinkedList;
 /**
  * Implements a FloodFill Algorithm.
  *
+ * Algorithm inspired from:
+ * https://en.wikipedia.org/wiki/Flood_fill
+ *
  * @since   May 18, 2016
  * @author  Constantin MASSON
  */

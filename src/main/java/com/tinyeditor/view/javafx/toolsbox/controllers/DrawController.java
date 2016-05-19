@@ -4,6 +4,7 @@ import com.tinyeditor.modules.draw.GuptaSproull;
 import com.tinyeditor.modules.draw.MidpointCircle;
 import com.tinyeditor.modules.draw.MidpointLine;
 import com.tinyeditor.modules.filling.FloodFill;
+import com.tinyeditor.modules.filling.ScanlineFill;
 import com.tinyeditor.view.javafx.FxApp;
 import com.tinyeditor.view.javafx.editor.EditorFxController;
 import javafx.beans.value.ChangeListener;
@@ -42,6 +43,8 @@ public class DrawController{
 	private RadioButton floodFill4AlgoBtn;
 	@FXML
 	private RadioButton floodFill8AlgoBtn;
+	@FXML
+	private RadioButton scanlineAlgoBtn;
 
 
 	// ************************************************************************
@@ -101,6 +104,19 @@ public class DrawController{
 			BuffPoint p1 = this.listTmpPoints.remove();
 			PixelReader pr = image.getPixelReader();
 			image = FloodFill.floodFill8(image, p1.x, p1.y, pr.getColor(p1.x,p1.y), colorPicker.getValue());
+		}
+		else if(this.scanlineAlgoBtn.isSelected()){
+			if(this.listTmpPoints.size() < 3){
+				return;
+			}
+			System.out.println("DEBUG");
+			int[] listx = new int[this.listTmpPoints.size()];
+			int[] listy = new int[this.listTmpPoints.size()];
+			for(int k=0; k<listTmpPoints.size(); k++){
+				listx[k] = listTmpPoints.get(k).x;
+				listy[k] = listTmpPoints.get(k).y;
+			}
+			ScanlineFill sf = new ScanlineFill(listx, listy);
 		}
 		this.editor.updateImage(image);
 	}
