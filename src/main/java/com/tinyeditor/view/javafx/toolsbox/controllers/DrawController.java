@@ -109,7 +109,6 @@ public class DrawController{
 			if(this.listTmpPoints.size() < 3){
 				return;
 			}
-			System.out.println("DEBUG");
 			int[] listx = new int[this.listTmpPoints.size()];
 			int[] listy = new int[this.listTmpPoints.size()];
 			for(int k=0; k<listTmpPoints.size(); k++){

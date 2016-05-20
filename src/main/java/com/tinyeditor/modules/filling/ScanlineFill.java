@@ -49,20 +49,6 @@ public class ScanlineFill {
 		this.yPos = y;
 		this.nbVertices = this.xPos.length;
 		this.initArrayData(this.nbVertices);
-
-
-		//@TODO DEBUG : MOCK : TO DELETE LATER
-		this.xPos = new int[6];
-		this.yPos = new int[6];
-		this.xPos[0] = 10; this.yPos[0] = 10;
-		this.xPos[1] = 10; this.yPos[1] = 16;
-		this.xPos[2] = 16; this.yPos[2] = 20;
-		this.xPos[3] = 28; this.yPos[3] = 10;
-		this.xPos[4] = 28; this.yPos[4] = 16;
-		this.xPos[5] = 22; this.yPos[5] = 10;
-		this.initArrayData(this.nbVertices);
-		//@TODO DEBUG: END
-
 		this.buildEdgeTable();
 	}
 
@@ -98,16 +84,16 @@ public class ScanlineFill {
 				continue;
 			}
 			if(y1>y2){
-				// swap ends
+				//p1(x1,y1) and p2(x2,y2) must be sorted using y value
 				int tmp = y1;
 				y1=y2; y2=tmp;
 				tmp=x1;
 				x1=x2; x2=tmp;
 			}
 			//Create the actual data and add this edge in array
-			double slope    = (double)(x2-x1)/(y2-y1);
-			ymax[nbEdges]   = y1;
-			ymin[nbEdges]   = y2;
+			double slope    = (x2-x1)/(double)(y2-y1); //(double) is important
+			ymax[nbEdges]   = y2;
+			ymin[nbEdges]   = y1;
 			xminy[nbEdges]  = y1 < y2 ? x1 : x2;
 			rSlope[nbEdges] = slope;
 			nbEdges++;
@@ -125,10 +111,21 @@ public class ScanlineFill {
 	 * @param y New y position.
 	 */
 	private void activateEdges(int y){
-		for(int k=0; k<nbEdges; k++){
-			int edge = k;
-			if(y == ymin[k]){
+		//Check each edge from global edge table.
+		for(int edge=0; edge<nbEdges; edge++){
+			//If this edge should be added in AET
+			if(y == ymin[edge]){
 				int index = 0;
+				//Get index where to place (Elt are sorted by x value)
+				while(index < nbActivesEdges && xminy[edge]>xminy[aet[index]]){
+					index++; //Recover the last position in AET
+				}
+				//Recreate the array after index position
+				for(int k=(nbActivesEdges-1); k>=index; k--){
+					aet[k+1] = aet[k];
+				}
+				aet[index] = edge;
+				nbActivesEdges++;
 			}
 		}
 	}
@@ -139,13 +136,65 @@ public class ScanlineFill {
 	 * @param y New y position.
 	 */
 	private void removeInactiveEdges(int y){
+		int i=0;
+		while(i<nbActivesEdges){
+			int index = aet[i];
+			if(y<ymin[index] || y>=ymax[index]){
+				//Reset aet array without this value
+				for(int k=i; k<(nbActivesEdges-1); k++){
+					aet[k] = aet[k+1];
+				}
+				nbActivesEdges--;
+			} else {
+				i++;
+			}
+		}
+	}
 
+	/**
+	 * Update all x coordinate for element in Active Edge Table.
+	 */
+	private void updateXCoordinates(){
+		int index;
+		double x1 = -Double.MAX_VALUE, x2;
+		boolean sorted = true;
+		for (int i=0; i<nbActivesEdges; i++) {
+			index = aet[i];
+			x2 = xminy[index] + rSlope[index];
+			xminy[index] = x2;
+			if (x2<x1){
+				sorted = false;
+			}
+			x1 = x2;
+		}
+		if(!sorted){
+			//Sort if need to be done.
+			this.sortActiveEdges();
+		}
+	}
+
+	/**
+	 * Sorts the actives edges list by x coordinate using a selection sort.
+	 */
+	private void sortActiveEdges(){
+		int min, tmp;
+		for(int k=0; k<nbActivesEdges; k++){
+			min = k;
+			for(int j=k; j<nbActivesEdges; j++){
+				if(xminy[aet[min]]>xminy[aet[j]]){
+					min = j;
+				}
+			}
+			tmp     = aet[k];
+			aet[k]  = aet[min];
+			aet[min]= tmp;
+		}
 	}
 
 
 
 	// *************************************************************************
-	// Functions
+	// Functions Draw
 	// *************************************************************************
 	/**
 	 * Draw the filled polygon.
@@ -165,27 +214,22 @@ public class ScanlineFill {
 		//Recover the min and max value from the polygon vertices.
 		int minY = Arrays.stream(yPos).min().getAsInt();
 		int maxY = Arrays.stream(yPos).max().getAsInt();
+		int xStart, xStop;
 
 		//Draw pixel from odd value edge to even.
-		for(int yLine = minY; yLine < maxY; yLine++){
-			/*
-			this.updateAET(yLine);
-
-			for(int k=0; k<this.nbActives; k+=2){
-				int xstart = this.globalEdgeTable.get(this.AET[k]).xval;
-				int xstop = this.globalEdgeTable.get(this.AET[k+1]).xval;
-
-				//@TODO DEBUG
-				System.out.println("start: "+xstart+", stop: "+xstop);
-
-				for(int posX=xstart; posX<=xstop; posX++){
-					System.out.print(" "+posX);
-					pixelWriter.setColor(posX, yLine, color);
+		for(int y = minY; y < maxY; y++){
+			this.removeInactiveEdges(y);
+			this.activateEdges(y);
+			for(int k=0; k<nbActivesEdges; k+=2){
+				//Deal with all 2 aet row
+				xStart  = (int)(xminy[aet[k]]);
+				xStop   = (int)(xminy[aet[k+1]]);
+				for(int x=xStart; x<=xStop; x++){
+					//Draw the line
+					pixelWriter.setColor(x, y, color);
 				}
-				System.out.println("");
 			}
-			this.updateXpositions();
-			*/
+			this.updateXCoordinates();
 		}
 		return wimage;
 	}
